@@ -1,0 +1,28 @@
+<div ng-controller="shellCtrl as vm">
+    <div id="adminNavBar" class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" ng-init="navCollapsed = true" ng-click="navCollapsed = !navCollapsed" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/">
+                    <i class="icon-home"></i>
+                    <img alt="" src="../../assets/images/logo.svg" />
+                    <span><%= appname %></span>
+                </a>
+            </div>
+            <div class="collapse navbar-collapse" ng-class="{'in': !navCollapsed}">
+                <ul class="nav navbar-nav">
+                    <li><a data-toggle="collapse" data-target=".navbar-collapse" href="/home">Home</a></li>
+                    <li><a data-toggle="collapse" data-target=".navbar-collapse" href="/about">About</a></li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+
+    <div ng-view id="ng-view" class="container slide-animation admin-content"></div>
+
+</div>

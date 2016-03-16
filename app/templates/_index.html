@@ -1,0 +1,35 @@
+<!doctype html>
+<html ng-app="<%= ngapp %>">
+
+<head>
+    <meta charset="utf-8">
+    <title><%= appname %></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="fragment" content="!" />
+    <base href="/">
+
+    <!-- bower:css -->
+    <!-- endbower -->
+    <!-- injector:css -->
+    <!-- endinjector -->
+</head>
+<body>
+    <div id="applicationHost" class="container body-content admin-appHost">
+        <div data-ng-include="'/assets/app/views/shell.html'"></div>
+    </div>
+
+    <div id="footer">
+        <div class="container">
+            <span class="text-center text-info credit">© Copyright 2015<%= currentYear %> <%= appname %></span>
+        </div>
+    </div>
+
+     <!-- bower:js -->
+     <!-- endbower -->
+
+    <!-- injector:js -->
+    <!-- endinjector -->
+</body>
+
+</html>
