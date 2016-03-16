@@ -28,7 +28,6 @@
     "generator-common": "^0.2.0",
     "lodash": "^4.6.1",
     "yeoman-generator": "^0.22.5",
-    "yo": "^1.7.0",
     "yosay": "^1.1.0"
   },
   "devDependencies": {
