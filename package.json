@@ -1,13 +1,27 @@
 {
   "name": "generator-nswebangular",
   "version": "1.0.0",
-  "description": "NS Web Development - Angular Generator",
+  "description": "NS Web Development - Yeoman generator for AngularJS applications with GruntJS",
+  "repository": "jovicaconkic/generator-grunt-angular",
   "main": "index.js",
   "scripts": {
     "test": "mocha"
   },
-  "author": "Jovica Čonkić",
+  "author": {
+    "name": "Jovica Čonkic",
+    "email": "jovica.conkic@gmail.com",
+    "url": "https://github.com/JovicaConkic"
+  },
   "license": "ISC",
+  "keywords": [
+    "yeoman-generator",
+    "scaffold",
+    "generator",
+    "framework",
+    "mvc",
+    "angularjs",
+    "grunt"
+  ],
   "dependencies": {
     "chalk": "^1.1.1",
     "chip": "0.0.5",
