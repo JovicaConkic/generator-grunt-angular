@@ -4,7 +4,8 @@
         'ngAnimate',
         'ngRoute',
         'angular-loading-bar',
-        'ui.bootstrap'
+        'ui.bootstrap',
+        'config'
     ]);
 
     app.config(['$routeProvider', '$locationProvider', '$httpProvider', configRoutes]);
@@ -38,8 +39,9 @@
         $httpProvider.useApplyAsync(true);
     }
 
-    app.run(['$route' , function ($route) {
+    app.run(['$route', '$rootScope', 'envPackage' , function ($route, $rootScope, envPackage) {
         // Add your functionality for running application
+        $rootScope.version = envPackage.version;
         $route.reload();
     }]);
 })();
