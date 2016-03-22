@@ -61,12 +61,12 @@ module.exports = function (grunt) {
      */
     injector: {
       options: {
-        ignorePath: '<%- project.app %>/',
+        ignorePath: ['<%- project.app %>/', '<%- project.dist %>/'],
         addRootSlash: false,
         min: true,
         template: '<%- project.app %>/index.html'
       },
-      local_dependencies: {
+      dev: {
         files: {
           '<%- project.app %>/index.html': [
             '<%- project.assets %>/js/**/*.js',
@@ -75,7 +75,16 @@ module.exports = function (grunt) {
           ]
         }
       },
-      bower_dependencies: {
+	  dist: {
+        files: {
+          '<%- project.dist %>/index.html': [
+            '<%- project.dist_src %>/js/**/*.js',
+            '<%- project.dist_src %>/app/**/*.js',
+            '<%- project.dist_src %>/css/*.css'
+          ]
+        }
+      },
+      bower: {
         options: {
           starttag: '<!-- bower:{{ext}} -->',
           endtag: '<!-- endbower -->'
@@ -112,6 +121,29 @@ module.exports = function (grunt) {
 		files: ['config.json']
 	  }
     },
+    
+    /**
+     * Files revisioning
+     * https://github.com/yeoman/grunt-filerev
+     * Static asset revisioning through file content hash
+     */
+	filerev: {
+	  dist: {
+        options: {
+		  encoding: 'utf8',
+          algorithm: 'md5',
+		  length: 8
+        },
+        files: [{
+          src: [
+		      '<%- project.dist_src %>/app/**/*.js',
+			  '<%- project.dist_src %>/js/**/*.js',
+			  '<%- project.dist_src %>/css/**/*.css'
+            ]
+          }
+        ]
+      }
+	},
 
     /**
      * Connect port/livereload
@@ -448,7 +480,8 @@ module.exports = function (grunt) {
     'ngconstant:dev',
     'jshint',
     //'concat:dev',
-    'injector',
+    'injector:dev',
+    'injector:bower',
     'imagemin:dev',
     'connect:livereload',
     'open',
@@ -465,7 +498,8 @@ module.exports = function (grunt) {
     'bump-only:patch',
     'ngconstant:dev',
     'jshint',
-    'injector',
+    'injector:dev',
+    'injector:bower',
     'imagemin:dev'
   ]);
   
@@ -475,12 +509,14 @@ module.exports = function (grunt) {
    * Then clean, copy, minify and optimize content for distrbution 
    */
   grunt.registerTask('publish', [
-    'injector',
     'clean',
     'copy',
     'sass:dist',
     'bump-only:minor',
     'ngconstant:dist',
+    'filerev:dist',
+    'injector:dist',
+    'injector:bower',
     'jshint',
     'uglify',
     'imagemin:dist',
