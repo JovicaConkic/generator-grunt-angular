@@ -105,7 +105,7 @@ module.exports = generators.Base.extend({
     configuring: function() {
     },
     writing: {
-        gulpfile: function() {
+        gruntfile: function() {
             this.copy('_Gruntfile.js', 'Gruntfile.js'),
             {
                 pkg: this.pkg,
@@ -117,6 +117,9 @@ module.exports = generators.Base.extend({
         },
         packageJSON: function() {
             this.copy('_package.json', 'package.json');
+        },
+        configJSON: function() {
+            this.copy('_config.json', 'config.json');
         },
         git: function() {
             this.composeWith('common', {
