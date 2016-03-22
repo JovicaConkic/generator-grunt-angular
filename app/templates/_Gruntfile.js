@@ -101,6 +101,17 @@ module.exports = function (grunt) {
               ' * Copyright <%- pkg.copyright %>. <%- pkg.license %> licensed.\n' +
               ' */\n'
     },
+    
+    /**
+     * Bump
+     * https://github.com/vojtajina/grunt-bump
+     * Bump package version, create tag, commit, push .
+     */
+	bump: {
+	  options: {
+		files: ['config.json']
+	  }
+    },
 
     /**
      * Connect port/livereload
@@ -143,6 +154,52 @@ module.exports = function (grunt) {
 		dest: '<%- project.dist %>',
 	  },
 	},
+    
+    /**
+     * NG Constant
+     * https://github.com/werk85/grunt-ng-constant
+     * Create angular constants
+     */
+    ngconstant: {
+      dev: {
+        options: {
+          dest: '<%- project.assets %>/js/config.js',
+		  wrap: "(function () {\n'use strict';\n {%= __ngModule %} })();",
+          name: 'config',
+		  space: ' '
+        },
+		constants: function () {
+		  var pkg = grunt.file.readJSON('config.json');
+		  pkg.env = 'DEV';
+		  pkg.description = 'We are in development!';
+          return {
+            envPackage: pkg
+          };
+        },
+        values: {
+          debug: false
+        }
+      },
+	  dist: {
+        options: {
+          dest: '<%- project.dist_src %>/js/config.js',
+		  wrap: "(function () {\n'use strict';\n {%= __ngModule %} })();",
+          name: 'config',
+		  space: ' '
+        },
+        constants: function () {
+		  var pkg = grunt.file.readJSON('config.json');
+		  pkg.env = 'PROD';
+		  pkg.description = 'We are in production!';
+          return {
+            envPackage: pkg
+          };
+        },
+        values: {
+          debug: false
+        }
+      }
+    },
 	
     /**
      * HTMLmin
@@ -388,6 +445,7 @@ module.exports = function (grunt) {
    */
   grunt.registerTask('default', [
     'sass:dev',
+    'ngconstant:dev',
     'jshint',
     //'concat:dev',
     'injector',
@@ -404,6 +462,8 @@ module.exports = function (grunt) {
    */
   grunt.registerTask('build', [
     'sass:dev',
+    'bump-only:patch',
+    'ngconstant:dev',
     'jshint',
     'injector',
     'imagemin:dev'
@@ -419,6 +479,8 @@ module.exports = function (grunt) {
     'clean',
     'copy',
     'sass:dist',
+    'bump-only:minor',
+    'ngconstant:dist',
     'jshint',
     'uglify',
     'imagemin:dist',
