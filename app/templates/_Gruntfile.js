@@ -41,6 +41,7 @@ module.exports = function (grunt) {
       app: 'app',
       dist: 'dist',
 	  dist_src: 'dist/assets',
+      test: 'e2e-tests',
 	  index: [
         '<%- project.app %>/index.html'
       ],
@@ -170,7 +171,21 @@ module.exports = function (grunt) {
 			];
           }
         }
-      }
+      },
+      test: {
+	    options: {
+	      base: 'app',
+          middleware: function (connect, options) {
+            var rules = [
+                '!\\.html|\\.js|\\.css|\\.svg|\\.jp(e?)g|\\.png|\\.gif$ /index.html [L]'
+            ];
+            return [
+			  rewrite(rules),
+			  mountFolder(connect, options.base)
+			];
+          }
+		}
+	  }
     },
     
     /**
@@ -468,7 +483,41 @@ module.exports = function (grunt) {
           '<%- project.assets %>/images/**/*.{png,PNG,jpg,JPG,jpeg,JPEG,gif,GIF,webp,WEBP,svg,SVG}'
         ]
       }
-    }
+    },
+    
+    /**
+     * Runs shell commands
+     * https://github.com/sindresorhus/grunt-shell  
+     * Webdriver-manager update command  
+     */
+    shell: {
+	  protractor_update: {
+	    options: {
+	      stdout: true
+		},
+	    command: 'node node_modules/protractor/bin/webdriver-manager update'
+	  }
+	},
+    
+    /**
+     * Grunt plugin for running Protractor runner
+     * https://github.com/teerapap/grunt-protractor-runner 
+     * Run protractor described tests  
+     */
+    protractor: {
+      options: {
+		configFile: "node_modules/protractor/example/conf.js",
+		noColor: true,
+		debug: false,
+		args: { }
+	  },
+	  e2e: {
+        options: {
+		  configFile: "<%- project.test %>/protractor.config.js",
+          keepAlive: false
+		}
+	  }
+	}
   });
 
   /**
@@ -504,11 +553,23 @@ module.exports = function (grunt) {
   ]);
   
   /**
+   * Test task
+   * Run `grunt e2e-test` on the command line
+   * Then test all described tests using protractor selenium wrapper
+   */
+  grunt.registerTask('e2e-test', [
+    'shell:protractor_update',
+	'connect:test',
+	'protractor:e2e'
+  ]);
+  
+  /**
    * Publish task
    * Run `grunt publish` on the command line
-   * Then clean, copy, minify and optimize content for distrbution 
+   * Then clean, copy, minify and optimize content for distribution 
    */
   grunt.registerTask('publish', [
+    'e2e-test',
     'clean',
     'copy',
     'sass:dist',

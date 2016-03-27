@@ -37,6 +37,7 @@ module.exports = generators.Base.extend({
             dist: '<%= project.dist %>',
             dist_src: '<%= project.dist_src %>',
             app: '<%= project.app %>',
+            test: '<%= project.test %>',
             index: '<%= project.index %>',
             assets: '<%= project.assets %>',
             css: '<%= project.css %>',
@@ -170,6 +171,9 @@ module.exports = generators.Base.extend({
             this.directory('app/app/directives', 'app/assets/app/directives');
             this.directory('app/app/filters', 'app/assets/app/filters');
             this.directory('app/app/services', 'app/assets/app/services');
+        },
+        appTestFiles: function() {
+            this.directory('app/e2e-tests', 'e2e-tests');
         },
         scripts: function() {
             this.fs.copyTpl(
