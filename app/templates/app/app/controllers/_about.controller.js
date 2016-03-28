@@ -3,13 +3,14 @@
 
     angular.module('<%= ngapp %>').controller('aboutCtrl', aboutCtrl);
 
-    aboutCtrl.$inject = [];
+    aboutCtrl.$inject = ['$scope'];
     
     /* @ngInject */
-    function aboutCtrl() {
+    function aboutCtrl($scope) {
         /* jshint validthis: true */
         var vm = this;
-
+        $scope.title = 'About View';
+        
         activate();
 
         function activate() {

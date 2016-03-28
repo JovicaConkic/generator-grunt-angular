@@ -2,7 +2,7 @@ exports.config = {
   allScriptsTimeout: 11000,
 
   specs: [
-    'scenarious/**/*.js'
+    'specs/**/*.js'
   ],
   
   multiCapabilities: [{

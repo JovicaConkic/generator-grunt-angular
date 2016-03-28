@@ -1,17 +1,17 @@
 'use strict';
-
-describe("My Angular Application", function() {
+/* globals describe, browser, beforeEach, it, expect, element, by  */
+describe('My Angular Application', function() {
     
     it('Should automatically redirect to / when location hash/fragment is empty', function() {
         browser.get('index.html');
-        expect(browser.getLocationAbsUrl()).toMatch("/");
+        expect(browser.getLocationAbsUrl()).toMatch('/');
     });
     
-    describe("Application Title", function() {
+    describe('Application Title', function() {
         beforeEach(function() {
             browser.get('index.html');
         });
-        it("Should display the correct title", function() {
+        it('Should display the correct title', function() {
             expect(browser.getTitle()).toEqual('My Cool Application');
         });
     });

@@ -37,7 +37,8 @@ module.exports = generators.Base.extend({
             dist: '<%= project.dist %>',
             dist_src: '<%= project.dist_src %>',
             app: '<%= project.app %>',
-            test: '<%= project.test %>',
+            e2e_test: '<%= project.e2e_test %>',
+            unit_test: '<%= project.unit_test %>',
             index: '<%= project.index %>',
             assets: '<%= project.assets %>',
             css: '<%= project.css %>',
@@ -89,10 +90,11 @@ module.exports = generators.Base.extend({
             
             this.log('\n');
             chip('The required libraries will be installed:')
-            chip.info('angular: ^1.5.0');
-            chip.info('angular-route: ^1.5.0');
-            chip.info('angular-animate: ^1.5.0');
-            chip.info('angular-bootstrap: ^1.2.4');
+            chip.info('angular: ^1.5.3');
+            chip.info('angular-route: ^1.5.3');
+            chip.info('angular-animate: ^1.5.3');
+            chip.info('angular-mocks: ^1.5.3');
+            chip.info('angular-bootstrap: ^1.2.5');
             chip.info('angular-loading-bar: ^0.8.0');
             chip.info('bootstrap-css-only: ^3.3.6\n');
             chip('Additional libraries will be installed:');
@@ -141,15 +143,17 @@ module.exports = generators.Base.extend({
             var bowerJson = {
                 name: this.appname,
                 license: 'MIT',
-                dependencies: {}  
+                dependencies: {},
+                devDependencies: {}
             };
             
-            bowerJson.dependencies['angular'] = '^1.5.0';
-            bowerJson.dependencies['angular-animate'] = '^1.5.0';
-            bowerJson.dependencies['angular-bootstrap'] = '^1.2.4';
+            bowerJson.dependencies['angular'] = '^1.5.3';
+            bowerJson.dependencies['angular-animate'] = '^1.5.3';
+            bowerJson.dependencies['angular-bootstrap'] = '^1.2.5';
             bowerJson.dependencies['angular-loading-bar'] = '^0.8.0';
-            bowerJson.dependencies['angular-route'] = '^1.5.0';
+            bowerJson.dependencies['angular-route'] = '^1.5.3';
             bowerJson.dependencies['bootstrap-css-only'] = '^3.3.6';
+            bowerJson.devDependencies['angular-mocks'] = '^1.5.3';
             if(this.includeLodash) {
                 bowerJson.dependencies['lodash'] = '^4.6.1';
             }
@@ -174,6 +178,17 @@ module.exports = generators.Base.extend({
         },
         appTestFiles: function() {
             this.directory('app/e2e-tests', 'e2e-tests');
+            this.fs.copyTpl(
+                this.templatePath('app/unit-tests/_karma.conf.js'),
+                this.destinationPath('unit-tests/karma.conf.js')
+            );
+            this.fs.copyTpl(
+                this.templatePath('app/unit-tests/specs/_demo.spec.js'),
+                this.destinationPath('unit-tests/specs/demo.spec.js'),
+                {
+                    ngapp: this.config.get('ngappname')
+                }
+            );
         },
         scripts: function() {
             this.fs.copyTpl(

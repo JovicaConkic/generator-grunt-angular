@@ -41,7 +41,8 @@ module.exports = function (grunt) {
       app: 'app',
       dist: 'dist',
 	  dist_src: 'dist/assets',
-      test: 'e2e-tests',
+      e2e_test: 'e2e-tests',
+      unit_test: 'unit-tests',
 	  index: [
         '<%- project.app %>/index.html'
       ],
@@ -284,7 +285,9 @@ module.exports = function (grunt) {
     jshint: {
       files: [
           '<%- project.src %>/js/**/*.js',
-          '<%- project.src %>/app/**/*.js'
+          '<%- project.src %>/app/**/*.js',
+          '<%- project.e2e_test %>/specs/**/*.js',
+		  '<%- project.unit_test %>/specs/**/*.js'
       ],
       options: {
         jshintrc: '.jshintrc'
@@ -466,6 +469,15 @@ module.exports = function (grunt) {
 		  spawn: false
 		}
       },
+      karma: {
+        files: [
+          '<%- project.src %>/js/**/*.js',
+          '<%- project.src %>/app/**/*.js',
+		  '<%- project.e2e_test %>/specs/**/*.js',
+		  '<%- project.unit_test %>/specs/**/*.js'
+        ],
+        tasks: ['karma:continuous:run']
+      },
       sass: {
         files: 'src/scss/{,*/}*.{scss,sass}',
         tasks: ['sass:dev']
@@ -500,6 +512,28 @@ module.exports = function (grunt) {
 	},
     
     /**
+     * Runs karma unit tests
+     * https://github.com/karma-runner/grunt-karma
+     */
+	karma: {
+	  options: {
+		configFile: '<%- project.unit_test %>/karma.conf.js',
+	  },
+	  unit: {
+        configFile: '<%- project.unit_test %>/karma.conf.js',
+		port: 9000,
+		singleRun: true,
+		browsers: ['Chrome', 'Firefox']
+	  },
+      continuous: {
+		reporters: 'dots',
+		singleRun: false,
+		browsers: ['PhantomJS'],
+		background: true
+	  },
+    },
+    
+    /**
      * Grunt plugin for running Protractor runner
      * https://github.com/teerapap/grunt-protractor-runner 
      * Run protractor described tests  
@@ -513,7 +547,7 @@ module.exports = function (grunt) {
 	  },
 	  e2e: {
         options: {
-		  configFile: "<%- project.test %>/protractor.config.js",
+		  configFile: "<%- project.e2e_test %>/protractor.conf.js",
           keepAlive: false
 		}
 	  }
@@ -534,6 +568,7 @@ module.exports = function (grunt) {
     'imagemin:dev',
     'connect:livereload',
     'open',
+    'karma:continuous:start',
     'watch'
   ]);
 
@@ -557,10 +592,12 @@ module.exports = function (grunt) {
    * Run `grunt e2e-test` on the command line
    * Then test all described tests using protractor selenium wrapper
    */
-  grunt.registerTask('e2e-test', [
+  grunt.registerTask('test', [
     'shell:protractor_update',
+    'jshint',
 	'connect:test',
-	'protractor:e2e'
+	'protractor:e2e',
+    'karma:unit'
   ]);
   
   /**
@@ -569,7 +606,7 @@ module.exports = function (grunt) {
    * Then clean, copy, minify and optimize content for distribution 
    */
   grunt.registerTask('publish', [
-    'e2e-test',
+    'test',
     'clean',
     'copy',
     'sass:dist',

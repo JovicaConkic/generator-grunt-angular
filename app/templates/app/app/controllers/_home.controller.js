@@ -3,12 +3,13 @@
 
     angular.module('<%= ngapp %>').controller('homeCtrl', homeCtrl);
 
-    homeCtrl.$inject = [];
+    homeCtrl.$inject = ['$scope'];
     
     /* @ngInject */
-    function homeCtrl() {
+    function homeCtrl($scope) {
         /* jshint validthis: true */
         var vm = this;
+        $scope.title = 'Home View';
 
         activate();
 
