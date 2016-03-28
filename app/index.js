@@ -14,12 +14,6 @@ module.exports = generators.Base.extend({
         
         chip('Application Name (arg): ' + this.appname);
         this.appname = _.kebabCase(this.appname);
-        
-        this.option('include-utils', {
-            desc: 'Optionally includes Angular-UI Utils library.',
-            type: Boolean,
-            default: false
-        });
     },
     
     initializing: function() {
@@ -57,13 +51,15 @@ module.exports = generators.Base.extend({
         this.log(yosay('Welcome to ' + chalk.yellow.bold('NSWD Angular') + ' Generator!\n'));
         
         var done = this.async();
-        this.prompt([{
+        
+        var ngAppNamePrompt = {
             type: 'input',
             name: 'ngappname',
             message: 'Angular Application Name (ng-app)',
             default: this.config.get('ngappname') || 'app'
-        },
-        {
+        };
+        
+        var dependencyPrompt = {
             type: 'checkbox',
             name: 'dependencies',
             message: 'Which JS Libraries would you like to include?',
@@ -80,30 +76,42 @@ module.exports = generators.Base.extend({
                 value: 'angularuiutils',
                 checked: true
             }]
-        }], function(answers) {
+        };
+        
+        var promptArray = [];
+        promptArray.push(ngAppNamePrompt);
+        
+        if(!this.options['skip-install']) {
+            promptArray.push(dependencyPrompt);
+        }
+        
+        var callback = function(answers) {
             this.config.set('ngappname', _.camelCase(answers.ngappname));
             this.config.save();
             
-            this.includeLodash = _.includes(answers.dependencies, 'lodash');
-            this.includeMoment = _.includes(answers.dependencies, 'momentjs');
-            this.includeAngularUIUtils = _.includes(answers.dependencies, 'angularuiutils');
-            
-            this.log('\n');
-            chip('The required libraries will be installed:')
-            chip.info('angular: ^1.5.3');
-            chip.info('angular-route: ^1.5.3');
-            chip.info('angular-animate: ^1.5.3');
-            chip.info('angular-mocks: ^1.5.3');
-            chip.info('angular-bootstrap: ^1.2.5');
-            chip.info('angular-loading-bar: ^0.8.0');
-            chip.info('bootstrap-css-only: ^3.3.6\n');
-            chip('Additional libraries will be installed:');
-            this.includeLodash ? chip.info('lodash: ^4.6.1') : chip.error('lodash: ^4.6.1');
-            this.includeMoment ? chip.info('moment: ^2.12.0') : chip.error('moment: ^2.12.0');
-            this.includeAngularUIUtils ? chip.info('angular-ui-utils: ^3.0.0\n') : chip.error('angular-ui-utils: ^3.0.0\n');
-            
+            if(!this.options['skip-install']) {
+                this.includeLodash = _.includes(answers.dependencies, 'lodash');
+                this.includeMoment = _.includes(answers.dependencies, 'momentjs');
+                this.includeAngularUIUtils = _.includes(answers.dependencies, 'angularuiutils');
+                
+                this.log('\n');
+                chip('The required libraries will be installed:')
+                chip.info('angular: ^1.5.3');
+                chip.info('angular-route: ^1.5.3');
+                chip.info('angular-animate: ^1.5.3');
+                chip.info('angular-mocks: ^1.5.3');
+                chip.info('angular-bootstrap: ^1.2.5');
+                chip.info('angular-loading-bar: ^0.8.0');
+                chip.info('bootstrap-css-only: ^3.3.6\n');
+                chip('Additional libraries will be installed:');
+                this.includeLodash ? chip.info('lodash: ^4.6.1') : chip.error('lodash: ^4.6.1');
+                this.includeMoment ? chip.info('moment: ^2.12.0') : chip.error('moment: ^2.12.0');
+                this.includeAngularUIUtils ? chip.info('angular-ui-utils: ^3.0.0\n') : chip.error('angular-ui-utils: ^3.0.0\n');
+            }
             done();
-        }.bind(this));
+        };
+        
+        this.prompt(promptArray, callback.bind(this));
     },
     configuring: function() {
     },
