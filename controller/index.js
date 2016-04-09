@@ -1,16 +1,15 @@
 'use strict';
 
 var generators = require('yeoman-generator'),
-    _ = require('lodash');
+    _ = require('lodash'),
+    chip = require('chip')();
 
 module.exports = generators.Base.extend({
     constructor: function() {
         generators.Base.apply(this, arguments);
         
         this.argument('name', { type: String, required: true });
-        this.log('name (arg): ' + this.name);
-        
-        console.log('Inisde sub-ng-ctrl sub-generator', this.name);
+        chip('Controller Name (arg): ' + this.name);
         
         this.option('view', {
             desc: 'Determines if view is created along with controller',
@@ -24,20 +23,18 @@ module.exports = generators.Base.extend({
         
         this.fs.copyTpl(
             this.templatePath('ng-controller.js'),
-            this.destinationPath('src/app/' + fileNameFragment + '/' + fileNameFragment + '.controller.js'),
+            this.destinationPath('app/assets/app/controllers/' + fileNameFragment + '.controller.js'),
             {
                 ctrlName: _.camelCase(this.name),
-                appName: this.config.get('ngappname')
+                appName: this.config.get('ngappname'),
+                name: _.startCase(fileNameFragment)
             }
         )
         
         if(this.options.view) {
             this.fs.copyTpl(
                 this.templatePath('ng-view.html'),
-                this.destinationPath('src/app/' + fileNameFragment + '/' + fileNameFragment + '.html'),
-                {
-                    name: this.name
-                }
+                this.destinationPath('app/assets/app/views/' + fileNameFragment + '.html')
             )
         }
         

@@ -3,12 +3,13 @@
 
     angular.module('<%= appName %>').controller('<%= ctrlName %>', <%= ctrlName %>);
 
-    <%= ctrlName %>.$inject = [];
+    <%= ctrlName %>.$inject = ['$scope'];
     
     /* @ngInject */
-    function <%= ctrlName %>() {
+    function <%= ctrlName %>($scope) {
         /* jshint validthis: true */
         var vm = this;
+        $scope.title = '<%= name %> View';
 
         activate();
 
