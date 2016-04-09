@@ -147,6 +147,14 @@ module.exports = generators.Base.extend({
                 local: require.resolve('generator-common')
             });
         },
+        travis: function() {
+            this.composeWith('travis', {
+                options: {}
+            },
+            {
+                local: require.resolve('generator-travis')
+            });
+        },
         bower: function() {
             var bowerJson = {
                 name: this.appname,
