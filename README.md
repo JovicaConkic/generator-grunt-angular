@@ -49,7 +49,7 @@ yo nswebangular myAngularApp --skip-install
 
 Available generators (sub-generators):
 
-* [nswebangular](#app))
+* [nswebangular](#app)
 * [nswebangular:controller](#controller)
 * [nswebangular:directive](#directive)
 * [nswebangular:filter](#filter)
