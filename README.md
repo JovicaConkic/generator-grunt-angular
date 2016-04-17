@@ -1,4 +1,4 @@
-# generator-grunt-angular [![Build Status](https://secure.travis-ci.org/JovicaConkic/generator-grunt-angular.svg?branch=master)](http://travis-ci.org/JovicaConkic/generator-grunt-angular) [![Dependency Status](https://david-dm.org/JovicaConkic/generator-grunt-angular.svg)](https://david-dm.org/JovicaConkic/generator-grunt-angular) [![Coverage Status](https://coveralls.io/repos/github/JovicaConkic/generator-grunt-angular/badge.svg?branch=master)](https://coveralls.io/github/JovicaConkic/generator-grunt-angular?branch=master) [![devDependency Status](https://david-dm.org/JovicaConkic/generator-grunt-angular/dev-status.svg)](https://david-dm.org/JovicaConkic/generator-grunt-angular#info=devDependencies) [![npm version](https://badge.fury.io/js/generator-nswebangular.svg)](https://badge.fury.io/js/generator-nswebangular)
+# generator-grunt-angular [![Build Status](https://secure.travis-ci.org/JovicaConkic/generator-grunt-angular.svg?branch=master)](http://travis-ci.org/JovicaConkic/generator-grunt-angular) [![Dependency Status](https://david-dm.org/JovicaConkic/generator-grunt-angular.svg)](https://david-dm.org/JovicaConkic/generator-grunt-angular) [![devDependency Status](https://david-dm.org/JovicaConkic/generator-grunt-angular/dev-status.svg)](https://david-dm.org/JovicaConkic/generator-grunt-angular#info=devDependencies) [![npm version](https://badge.fury.io/js/generator-nswebangular.svg)](https://badge.fury.io/js/generator-nswebangular)
 > Yeoman generator for AngularJS projects with GruntJS
 
 generator-grunt-angular is one of the many generators for building a new Angular SPA (Single Page Application) based on 
@@ -264,3 +264,152 @@ Gruntfile.js                    --> Grunt build file
 package.json                    --> package definition manifest for Node/npm
 
 ```
+
+## Gruntfile.js & Grunt tasks
+
+Gruntfile.js contains next 4 main grunt tasks:
+
+* [grunt](#grunt) or [grunt default](#grunt)
+* [grunt build](#grunt build)
+* [grunt test](#grunt test)
+* [grunt publish](#grunt publish)
+
+### Grunt
+Grunt default task runner.
+
+Example:
+```bash
+grunt
+```
+or
+```bash
+grunt default
+```
+
+Grunt default snippet:
+```javascript
+grunt.registerTask('default', [
+    'sass:dev',
+    'ngconstant:dev',
+    'jshint',
+    'injector:dev',
+    'injector:bower',
+    'imagemin:dev',
+    'connect:livereload',
+    'open',
+    'karma:continuous:start',
+    'watch'
+  ]);
+```
+
+Grunt default task contains following grunt sub-tasks:
+* [sass:dev](#https://github.com/gruntjs/grunt-contrib-sass) - SCSS/SASS compiler for development (expanded CSS style)
+* [ngconstant:dev](#https://github.com/werk85/grunt-ng-constant) - Used to create angular constant/config file(development build version)
+* [jshint](#https://github.com/gruntjs/grunt-contrib-jshint) - JSHint
+* [injector:dev](#https://github.com/klei/grunt-injector) - Inject references(js files and stylesheets) into a html file
+* [injector:bower](#https://github.com/klei/grunt-injector) - Inject bower references into a html file
+* [imagemin:dev](#https://github.com/gruntjs/grunt-contrib-imagemin) - Compresses and minify images
+* [connect:livereload](#https://github.com/gruntjs/grunt-contrib-connect) - Starts a local webserver with rewrite rules and livereload
+* [open](#https://github.com/jsoverson/grunt-open) - Open the webserver in the browser
+* [karma:continuous:start](#https://github.com/karma-runner/grunt-karma) - Starts karma server for watch task
+* [watch](#https://github.com/gruntjs/grunt-contrib-watch) - Watching development files and run concat/compile tasks
+
+### Grunt Build
+Grunt build task runner.
+
+Example:
+```bash
+grunt build
+```
+
+Grunt build snippet:
+```javascript
+grunt.registerTask('build', [
+    'sass:dev',
+    'bump-only:patch',
+    'ngconstant:dev',
+    'jshint',
+    'injector:dev',
+    'injector:bower',
+    'imagemin:dev'
+  ]);
+```
+
+Grunt build task contains following grunt sub-tasks:
+* [sass:dev](#https://github.com/gruntjs/grunt-contrib-sass) - SCSS/SASS compiler for development (expanded CSS style)
+* [bump-only:patch](#https://github.com/vojtajina/grunt-bump) - Bump package version (patch) for development and updates config.json build version
+* [ngconstant:dev](#https://github.com/werk85/grunt-ng-constant) - Used to create angular constant/config file(development build version)
+* [jshint](#https://github.com/gruntjs/grunt-contrib-jshint) - JSHint
+* [injector:dev](#https://github.com/klei/grunt-injector) - Inject references(js files and stylesheets) into a html file
+* [injector:bower](#https://github.com/klei/grunt-injector) - Inject bower references into a html file
+* [imagemin:dev](#https://github.com/gruntjs/grunt-contrib-imagemin) - Compresses and minify images
+
+### Grunt Test
+Grunt test task runner.
+
+Example:
+```bash
+grunt test
+```
+
+Grunt test snippet:
+```javascript
+grunt.registerTask('test', [
+    'shell:protractor_update',
+    'jshint',
+	'connect:test',
+	'protractor:e2e',
+    'karma:unit'
+  ]);
+```
+
+Grunt test task contains following grunt sub-tasks:
+* [shell:protractor_update](#https://github.com/sindresorhus/grunt-shell) - Shell command to update webdriver-manager
+* [jshint](#https://github.com/gruntjs/grunt-contrib-jshint) - JSHint
+* [connect:test](#https://github.com/gruntjs/grunt-contrib-connect) - Starts a local webserver with rewrite rules for testing purpose
+* [protractor:e2e](#https://github.com/teerapap/grunt-protractor-runner) - Runs protractor's end-to-end tasks
+* [karma:unit](#https://github.com/karma-runner/grunt-karma) - Runs karma unit test
+
+### Grunt Publish
+Grunt publish task runner. Running tests, applying new build version, copy minified application files into dist directory, adding file revisions and perform content optimization for distribution.  
+
+Example:
+```bash
+grunt publish
+```
+
+Grunt publish snippet:
+```javascript
+grunt.registerTask('publish', [
+    'test',
+    'clean',
+    'copy',
+    'sass:dist',
+    'bump-only:minor',
+    'ngconstant:dist',
+    'filerev:dist',
+    'injector:dist',
+    'injector:bower',
+    'jshint',
+    'uglify',
+    'imagemin:dist',
+    'htmlmin:dist'
+  ]);
+```
+
+Grunt default task contains following grunt sub-tasks:
+* [test](#grunt test) - Runs grunt test task
+* [clean](#https://github.com/gruntjs/grunt-contrib-clean) - Cleans distribution (dist) files and folders
+* [copy](#https://github.com/gruntjs/grunt-contrib-copy) - Copy app files and folders in dist directory
+* [sass:dist](#https://github.com/gruntjs/grunt-contrib-sass) - SCSS/SASS compiler for distribution (compressed CSS)
+* [bump-only:minor](#https://github.com/vojtajina/grunt-bump) - Bump package version (minor) for distribution and updates config.json build version
+* [ngconstant:dist](#https://github.com/werk85/grunt-ng-constant) - Used to create angular constant/config file(distribution build version)
+* [filerev:dist](#https://github.com/yeoman/grunt-filerev) - Static asset revisioning through file content hash
+* [injector:dist](#https://github.com/klei/grunt-injector) - Inject references (js files and stylesheets) into a html file for distribution
+* [injector:bower](#https://github.com/klei/grunt-injector) - Inject bower references into a html file for distribution
+* [jshint](#https://github.com/gruntjs/grunt-contrib-jshint) - JSHint
+* [uglify](#https://github.com/gruntjs/grunt-contrib-uglify) - Compresses and minifies all JavaScript files
+* [imagemin:dist](#https://github.com/gruntjs/grunt-contrib-imagemin) - Compresses and minify images
+* [htmlmin:dist](#https://github.com/gruntjs/grunt-contrib-htmlmin) - Minify HTML
+
+
