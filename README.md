@@ -1,13 +1,13 @@
-# generator-grunt-angular [![Build Status](https://secure.travis-ci.org/JovicaConkic/generator-grunt-angular.svg?branch=master)](http://travis-ci.org/JovicaConkic/generator-grunt-angular) [![Dependency Status](https://david-dm.org/JovicaConkic/generator-grunt-angular.svg)](https://david-dm.org/JovicaConkic/generator-grunt-angular) [![devDependency Status](https://david-dm.org/JovicaConkic/generator-grunt-angular/dev-status.svg)](https://david-dm.org/JovicaConkic/generator-grunt-angular#info=devDependencies) [![npm version](https://badge.fury.io/js/generator-nswebangular.svg)](https://badge.fury.io/js/generator-nswebangular)
+# generator-nswebangular [![Build Status](https://secure.travis-ci.org/JovicaConkic/generator-nswebangular.svg?branch=master)](http://travis-ci.org/JovicaConkic/generator-nswebangular) [![Dependency Status](https://david-dm.org/JovicaConkic/generator-nswebangular.svg)](https://david-dm.org/JovicaConkic/generator-nswebangular) [![devDependency Status](https://david-dm.org/JovicaConkic/generator-nswebangular/dev-status.svg)](https://david-dm.org/JovicaConkic/generator-nswebangular#info=devDependencies) [![npm version](https://badge.fury.io/js/generator-nswebangular.svg)](https://badge.fury.io/js/generator-nswebangular)
 > Yeoman generator for AngularJS projects with GruntJS
 
-generator-grunt-angular is one of the many generators for building a new Angular SPA (Single Page Application) based on 
+generator-nswebangular is one of the many generators for building a new Angular SPA (Single Page Application) based on 
 yeoman generator. It is created as a sum of everything that you can find all over www and which is really necessary and 
 helpful to start your work of building Angular application.
 
 ## Prerequisites
 
-In order to use this generator-grunt-angular, you'll need to install the latest version of [nodeJS](https://nodejs.org/en/download/). 
+In order to use this generator-nswebangular, you'll need to install the latest version of [nodeJS](https://nodejs.org/en/download/). 
 Once when you install the latest version of nodeJS, or you already have it, you'll need to install globally following packages using 
 node package manager (npm):
 * yo
@@ -21,7 +21,7 @@ To do so, you can just simply run npm command
 npm yo generator-nswebangular grunt grunt-cli bower -g install
 ```
 
-Once you are done with installation of all prerequisites, you'll be good to go to use generator-grunt-angular.
+Once you are done with installation of all prerequisites, you'll be good to go to use generator-nswebangular.
 
 ## Usage
 
@@ -30,7 +30,7 @@ Make a new project directory, and cd into it:
 mkdir 'path/to/the/project/directory' && cd 'path/to/the/project/directory'
 ```
 
-If you are done with this step, it is time to run and use generator-grunt-angular using following command:
+If you are done with this step, it is time to run and use generator-nswebangular using following command:
 ```
 yo nswebangular [projectName]
 ```
@@ -455,7 +455,7 @@ instruction on how to do this.
 
 ## Changelog
 
-Recent changes can be viewed on Github on the [Releases Page](https://github.com/JovicaConkic/generator-grunt-angular/releases)
+Recent changes can be viewed on Github on the [Releases Page](https://github.com/JovicaConkic/generator-nswebangular/releases)
 
 ## License
 
