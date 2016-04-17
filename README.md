@@ -171,7 +171,7 @@ Produces `app/assets/app/filters/contact.filter.js`:
     angular.module('app').factory('contact', contact);
 
     function contact() {
-        return contactFilter
+        return contactFilter;
 
         function contactFilter(params) {
             return params;
@@ -211,4 +211,56 @@ Produces `app/assets/app/services/my-service.service.js`:
         }
     }
 })();
+```
+
+## Application Directory Layout
+
+```
+app/                            --> all of the source files for the application
+  index.html                    --> the main html template for the application
+  favicon.ico                   --> favicon file
+  assets/                       --> all app assets
+    app/                        --> anugular app related files
+      controllers/              --> angular app controllers directory
+        about.controller.js     --> about controller logic
+        home.controller.js      --> home controller logic
+        shell.controller.js     --> shell controller logic
+      directives/               --> angular app directives directory
+      filters/                  --> angular app filters directory
+      services/                 --> angular app services directory
+      views/                    --> angular app partial views directory
+        about.html              --> about partial view template
+        home.html               --> home partial view template
+        shell.html              --> shell partial view template
+    bower_components/           --> 3rd party libraries managed by bower
+    css/                        --> css source files
+      style.css                 --> default stylesheet
+    fonts/                      --> fonts source files
+    images/                     --> images source files
+      logo.svg                  --> logo image file
+    js/                         --> app JS files
+      app.js                    --> main application module
+      config.js                 --> config/constant build version
+dist/                           --> distributable version of app built using grunt and Gruntfile.js
+e2e-tests/                      --> end-to-end tests directory
+  specs/                        --> scenarios directory to be run by Protractor
+    index.spec.js               --> end-to-end scenarios to be run by Protractor
+  protractor.conf.js            --> Protractor config file
+node_modules/                   --> npm managed libraries used by grunt
+src/                            --> SCSS/SASS files, or other JS files to be used with Grunt's uglify task
+unit-tests/                     --> unit tests directory
+  specs/                        --> scenarios directory to be run by Karma
+    demo.spec.js                --> unit test scenarios to be run by Karma
+  karma.conf.js                 --> Karma config file
+.bowerrc                        --> bower configuration file
+.gitattributes                  --> git attributes file
+.gitignore                      --> git ignore config file
+.jshintrc                       --> jshintrc config file
+.travis.yml                     --> travis ci continuous build config file
+.yo-rc.json                     --> yeoman configuration options file
+bower.json                      --> package definition manifest for bower
+config.json                     --> build configuration file
+Gruntfile.js                    --> Grunt build file
+package.json                    --> package definition manifest for Node/npm
+
 ```
