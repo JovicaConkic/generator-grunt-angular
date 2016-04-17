@@ -441,4 +441,22 @@ e2e-tests/                      --> end-to-end tests directory
   protractor.conf.js            --> Protractor config file
 ```
 
+## Continuous Integration
 
+### Travis CI
+
+[Travis CI][travis] is a continuous integration service, which can monitor GitHub for new commits
+to your repository and execute scripts such as building the app or running tests. The angular-seed
+project contains a Travis configuration file, `.travis.yml`, which will cause Travis to run your
+tests when you push to GitHub.
+
+You will need to enable the integration between Travis and GitHub. See the Travis website for more
+instruction on how to do this.
+
+## Changelog
+
+Recent changes can be viewed on Github on the [Releases Page](https://github.com/JovicaConkic/generator-grunt-angular/releases)
+
+## License
+
+[ISC license](https://opensource.org/licenses/ISC)
