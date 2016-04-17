@@ -270,9 +270,9 @@ package.json                    --> package definition manifest for Node/npm
 Gruntfile.js contains next 4 main grunt tasks:
 
 * [grunt](#grunt) or [grunt default](#grunt)
-* [grunt build](#grunt_build)
-* [grunt test](#grunt_test)
-* [grunt publish](#grunt_publish)
+* [grunt build](#grunt-build)
+* [grunt test](#grunt-test)
+* [grunt publish](#grunt-publish)
 
 ### Grunt
 Grunt default task runner.
@@ -398,7 +398,7 @@ grunt.registerTask('publish', [
 ```
 
 Grunt default task contains following grunt sub-tasks:
-* [test](#grunt_test) - Runs grunt test task
+* [test](#grunt-test) - Runs grunt test task
 * [clean](https://github.com/gruntjs/grunt-contrib-clean) - Cleans distribution (dist) files and folders
 * [copy](https://github.com/gruntjs/grunt-contrib-copy) - Copy app files and folders in dist directory
 * [sass:dist](https://github.com/gruntjs/grunt-contrib-sass) - SCSS/SASS compiler for distribution (compressed CSS)
