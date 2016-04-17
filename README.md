@@ -445,7 +445,7 @@ e2e-tests/                      --> end-to-end tests directory
 
 ### Travis CI
 
-[Travis CI][travis] is a continuous integration service, which can monitor GitHub for new commits
+[Travis CI](https://travis-ci.org/) is a continuous integration service, which can monitor GitHub for new commits
 to your repository and execute scripts such as building the app or running tests. The angular-seed
 project contains a Travis configuration file, `.travis.yml`, which will cause Travis to run your
 tests when you push to GitHub.
