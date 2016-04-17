@@ -306,7 +306,7 @@ Grunt default task contains following grunt sub-tasks:
 * [sass:dev](https://github.com/gruntjs/grunt-contrib-sass) - SCSS/SASS compiler for development (expanded CSS style)
 * [ngconstant:dev](https://github.com/werk85/grunt-ng-constant) - Used to create angular constant/config file(development build version)
 * [jshint](https://github.com/gruntjs/grunt-contrib-jshint) - JSHint
-* [injector:dev](https://github.com/klei/grunt-injector) - Inject references(js files and stylesheets) into a html file
+* [injector:dev](https://github.com/klei/grunt-injector) - Inject references (js files and stylesheets) into a html file
 * [injector:bower](https://github.com/klei/grunt-injector) - Inject bower references into a html file
 * [imagemin:dev](https://github.com/gruntjs/grunt-contrib-imagemin) - Compresses and minify images
 * [connect:livereload](https://github.com/gruntjs/grunt-contrib-connect) - Starts a local webserver with rewrite rules and livereload
@@ -338,7 +338,7 @@ grunt.registerTask('build', [
 Grunt build task contains following grunt sub-tasks:
 * [sass:dev](https://github.com/gruntjs/grunt-contrib-sass) - SCSS/SASS compiler for development (expanded CSS style)
 * [bump-only:patch](https://github.com/vojtajina/grunt-bump) - Bump package version (patch) for development and updates config.json build version
-* [ngconstant:dev](https://github.com/werk85/grunt-ng-constant) - Used to create angular constant/config file(development build version)
+* [ngconstant:dev](https://github.com/werk85/grunt-ng-constant) - Used to create angular constant/config file (development build version)
 * [jshint](https://github.com/gruntjs/grunt-contrib-jshint) - JSHint
 * [injector:dev](https://github.com/klei/grunt-injector) - Inject references(js files and stylesheets) into a html file
 * [injector:bower](https://github.com/klei/grunt-injector) - Inject bower references into a html file
@@ -403,7 +403,7 @@ Grunt default task contains following grunt sub-tasks:
 * [copy](https://github.com/gruntjs/grunt-contrib-copy) - Copy app files and folders in dist directory
 * [sass:dist](https://github.com/gruntjs/grunt-contrib-sass) - SCSS/SASS compiler for distribution (compressed CSS)
 * [bump-only:minor](https://github.com/vojtajina/grunt-bump) - Bump package version (minor) for distribution and updates config.json build version
-* [ngconstant:dist](https://github.com/werk85/grunt-ng-constant) - Used to create angular constant/config file(distribution build version)
+* [ngconstant:dist](https://github.com/werk85/grunt-ng-constant) - Used to create angular constant/config file (distribution build version)
 * [filerev:dist](https://github.com/yeoman/grunt-filerev) - Static asset revisioning through file content hash
 * [injector:dist](https://github.com/klei/grunt-injector) - Inject references (js files and stylesheets) into a html file for distribution
 * [injector:bower](https://github.com/klei/grunt-injector) - Inject bower references into a html file for distribution
@@ -411,5 +411,34 @@ Grunt default task contains following grunt sub-tasks:
 * [uglify](https://github.com/gruntjs/grunt-contrib-uglify) - Compresses and minifies all JavaScript files
 * [imagemin:dist](https://github.com/gruntjs/grunt-contrib-imagemin) - Compresses and minify images
 * [htmlmin:dist](https://github.com/gruntjs/grunt-contrib-htmlmin) - Minify HTML
+
+## Testing
+
+Grunt test task runs two types of testing:
+
+* [Unit Tests](#unit-tests)
+* [End-to-end Tests](#end-to-end-tests)
+
+### Unit Tests
+
+[Karma](http://karma-runner.github.io/) is JavaScript command line tool which is used to runs unit test by using [Jasmine](http://jasmine.github.io/1.3/introduction.html) test framework and [angular-mocks](https://docs.angularjs.org/api/ngMock). To use Jasmine with Karma, we use the [karma-jasmine](https://github.com/karma-runner/karma-jasmine) test runner. Browsers that are used for unit tests are: Chrome, Firefox or PhantomJS.
+
+```
+unit-tests/                     --> unit tests directory
+  specs/                        --> scenarios directory to be run by Karma
+    demo.spec.js                --> unit test scenarios to be run by Karma
+  karma.conf.js                 --> Karma config file
+```
+
+### End-to-end Tests
+
+[Protractor](http://angular.github.io/protractor/) is an end-to-end test framework for AngularJS applications. Protractor is using web-drivers to start Java Selenium server and using [Jasmine](http://jasmine.github.io/1.3/introduction.html) test framework runs the test against application. Protractor can use Chrome or Firefox (or other) browsers to perform e2e tests which could be set in `protractor.conf.js` file.
+
+```
+e2e-tests/                      --> end-to-end tests directory
+  specs/                        --> scenarios directory to be run by Protractor
+    index.spec.js               --> end-to-end scenarios to be run by Protractor
+  protractor.conf.js            --> Protractor config file
+```
 
 
