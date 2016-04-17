@@ -2,7 +2,7 @@
   "name": "generator-nswebangular",
   "version": "1.1.1",
   "description": "NS Web Development - Yeoman generator for AngularJS applications with GruntJS",
-  "repository": "jovicaconkic/generator-grunt-angular",
+  "repository": "jovicaconkic/generator-nswebangular",
   "main": "index.js",
   "scripts": {
     "test": "mocha"
