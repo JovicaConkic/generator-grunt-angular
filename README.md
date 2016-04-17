@@ -1,4 +1,4 @@
-# generator-grunt-angular [![Build Status](https://secure.travis-ci.org/JovicaConkic/generator-grunt-angular.svg?branch=master)](http://travis-ci.org/JovicaConkic/generator-grunt-angular)
+# generator-grunt-angular [![Build Status](https://secure.travis-ci.org/JovicaConkic/generator-grunt-angular.svg?branch=master)](http://travis-ci.org/JovicaConkic/generator-grunt-angular) [![Dependency Status](https://david-dm.org/JovicaConkic/generator-grunt-angular.svg)](https://david-dm.org/JovicaConkic/generator-grunt-angular) [![Coverage Status](https://coveralls.io/repos/github/JovicaConkic/generator-grunt-angular/badge.svg?branch=master)](https://coveralls.io/github/JovicaConkic/generator-grunt-angular?branch=master)
 > Yeoman generator for AngularJS projects with GruntJS
 
 generator-grunt-angular is one of the many generators for building a new Angular SPA (Single Page Application) based on 
