@@ -270,9 +270,9 @@ package.json                    --> package definition manifest for Node/npm
 Gruntfile.js contains next 4 main grunt tasks:
 
 * [grunt](#grunt) or [grunt default](#grunt)
-* [grunt build](#grunt build)
-* [grunt test](#grunt test)
-* [grunt publish](#grunt publish)
+* [grunt build](#grunt_build)
+* [grunt test](#grunt_test)
+* [grunt publish](#grunt_publish)
 
 ### Grunt
 Grunt default task runner.
@@ -303,16 +303,16 @@ grunt.registerTask('default', [
 ```
 
 Grunt default task contains following grunt sub-tasks:
-* [sass:dev](#https://github.com/gruntjs/grunt-contrib-sass) - SCSS/SASS compiler for development (expanded CSS style)
-* [ngconstant:dev](#https://github.com/werk85/grunt-ng-constant) - Used to create angular constant/config file(development build version)
-* [jshint](#https://github.com/gruntjs/grunt-contrib-jshint) - JSHint
-* [injector:dev](#https://github.com/klei/grunt-injector) - Inject references(js files and stylesheets) into a html file
-* [injector:bower](#https://github.com/klei/grunt-injector) - Inject bower references into a html file
-* [imagemin:dev](#https://github.com/gruntjs/grunt-contrib-imagemin) - Compresses and minify images
-* [connect:livereload](#https://github.com/gruntjs/grunt-contrib-connect) - Starts a local webserver with rewrite rules and livereload
-* [open](#https://github.com/jsoverson/grunt-open) - Open the webserver in the browser
-* [karma:continuous:start](#https://github.com/karma-runner/grunt-karma) - Starts karma server for watch task
-* [watch](#https://github.com/gruntjs/grunt-contrib-watch) - Watching development files and run concat/compile tasks
+* [sass:dev](https://github.com/gruntjs/grunt-contrib-sass) - SCSS/SASS compiler for development (expanded CSS style)
+* [ngconstant:dev](https://github.com/werk85/grunt-ng-constant) - Used to create angular constant/config file(development build version)
+* [jshint](https://github.com/gruntjs/grunt-contrib-jshint) - JSHint
+* [injector:dev](https://github.com/klei/grunt-injector) - Inject references(js files and stylesheets) into a html file
+* [injector:bower](https://github.com/klei/grunt-injector) - Inject bower references into a html file
+* [imagemin:dev](https://github.com/gruntjs/grunt-contrib-imagemin) - Compresses and minify images
+* [connect:livereload](https://github.com/gruntjs/grunt-contrib-connect) - Starts a local webserver with rewrite rules and livereload
+* [open](https://github.com/jsoverson/grunt-open) - Open the webserver in the browser
+* [karma:continuous:start](https://github.com/karma-runner/grunt-karma) - Starts karma server for watch task
+* [watch](https://github.com/gruntjs/grunt-contrib-watch) - Watching development files and run concat/compile tasks
 
 ### Grunt Build
 Grunt build task runner.
@@ -336,13 +336,13 @@ grunt.registerTask('build', [
 ```
 
 Grunt build task contains following grunt sub-tasks:
-* [sass:dev](#https://github.com/gruntjs/grunt-contrib-sass) - SCSS/SASS compiler for development (expanded CSS style)
-* [bump-only:patch](#https://github.com/vojtajina/grunt-bump) - Bump package version (patch) for development and updates config.json build version
-* [ngconstant:dev](#https://github.com/werk85/grunt-ng-constant) - Used to create angular constant/config file(development build version)
-* [jshint](#https://github.com/gruntjs/grunt-contrib-jshint) - JSHint
-* [injector:dev](#https://github.com/klei/grunt-injector) - Inject references(js files and stylesheets) into a html file
-* [injector:bower](#https://github.com/klei/grunt-injector) - Inject bower references into a html file
-* [imagemin:dev](#https://github.com/gruntjs/grunt-contrib-imagemin) - Compresses and minify images
+* [sass:dev](https://github.com/gruntjs/grunt-contrib-sass) - SCSS/SASS compiler for development (expanded CSS style)
+* [bump-only:patch](https://github.com/vojtajina/grunt-bump) - Bump package version (patch) for development and updates config.json build version
+* [ngconstant:dev](https://github.com/werk85/grunt-ng-constant) - Used to create angular constant/config file(development build version)
+* [jshint](https://github.com/gruntjs/grunt-contrib-jshint) - JSHint
+* [injector:dev](https://github.com/klei/grunt-injector) - Inject references(js files and stylesheets) into a html file
+* [injector:bower](https://github.com/klei/grunt-injector) - Inject bower references into a html file
+* [imagemin:dev](https://github.com/gruntjs/grunt-contrib-imagemin) - Compresses and minify images
 
 ### Grunt Test
 Grunt test task runner.
@@ -364,11 +364,11 @@ grunt.registerTask('test', [
 ```
 
 Grunt test task contains following grunt sub-tasks:
-* [shell:protractor_update](#https://github.com/sindresorhus/grunt-shell) - Shell command to update webdriver-manager
-* [jshint](#https://github.com/gruntjs/grunt-contrib-jshint) - JSHint
-* [connect:test](#https://github.com/gruntjs/grunt-contrib-connect) - Starts a local webserver with rewrite rules for testing purpose
-* [protractor:e2e](#https://github.com/teerapap/grunt-protractor-runner) - Runs protractor's end-to-end tasks
-* [karma:unit](#https://github.com/karma-runner/grunt-karma) - Runs karma unit test
+* [shell:protractor_update](https://github.com/sindresorhus/grunt-shell) - Shell command to update webdriver-manager
+* [jshint](https://github.com/gruntjs/grunt-contrib-jshint) - JSHint
+* [connect:test](https://github.com/gruntjs/grunt-contrib-connect) - Starts a local webserver with rewrite rules for testing purpose
+* [protractor:e2e](https://github.com/teerapap/grunt-protractor-runner) - Runs protractor's end-to-end tasks
+* [karma:unit](https://github.com/karma-runner/grunt-karma) - Runs karma unit test
 
 ### Grunt Publish
 Grunt publish task runner. Running tests, applying new build version, copy minified application files into dist directory, adding file revisions and perform content optimization for distribution.  
@@ -398,18 +398,18 @@ grunt.registerTask('publish', [
 ```
 
 Grunt default task contains following grunt sub-tasks:
-* [test](#grunt test) - Runs grunt test task
-* [clean](#https://github.com/gruntjs/grunt-contrib-clean) - Cleans distribution (dist) files and folders
-* [copy](#https://github.com/gruntjs/grunt-contrib-copy) - Copy app files and folders in dist directory
-* [sass:dist](#https://github.com/gruntjs/grunt-contrib-sass) - SCSS/SASS compiler for distribution (compressed CSS)
-* [bump-only:minor](#https://github.com/vojtajina/grunt-bump) - Bump package version (minor) for distribution and updates config.json build version
-* [ngconstant:dist](#https://github.com/werk85/grunt-ng-constant) - Used to create angular constant/config file(distribution build version)
-* [filerev:dist](#https://github.com/yeoman/grunt-filerev) - Static asset revisioning through file content hash
-* [injector:dist](#https://github.com/klei/grunt-injector) - Inject references (js files and stylesheets) into a html file for distribution
-* [injector:bower](#https://github.com/klei/grunt-injector) - Inject bower references into a html file for distribution
-* [jshint](#https://github.com/gruntjs/grunt-contrib-jshint) - JSHint
-* [uglify](#https://github.com/gruntjs/grunt-contrib-uglify) - Compresses and minifies all JavaScript files
-* [imagemin:dist](#https://github.com/gruntjs/grunt-contrib-imagemin) - Compresses and minify images
-* [htmlmin:dist](#https://github.com/gruntjs/grunt-contrib-htmlmin) - Minify HTML
+* [test](#grunt_test) - Runs grunt test task
+* [clean](https://github.com/gruntjs/grunt-contrib-clean) - Cleans distribution (dist) files and folders
+* [copy](https://github.com/gruntjs/grunt-contrib-copy) - Copy app files and folders in dist directory
+* [sass:dist](https://github.com/gruntjs/grunt-contrib-sass) - SCSS/SASS compiler for distribution (compressed CSS)
+* [bump-only:minor](https://github.com/vojtajina/grunt-bump) - Bump package version (minor) for distribution and updates config.json build version
+* [ngconstant:dist](https://github.com/werk85/grunt-ng-constant) - Used to create angular constant/config file(distribution build version)
+* [filerev:dist](https://github.com/yeoman/grunt-filerev) - Static asset revisioning through file content hash
+* [injector:dist](https://github.com/klei/grunt-injector) - Inject references (js files and stylesheets) into a html file for distribution
+* [injector:bower](https://github.com/klei/grunt-injector) - Inject bower references into a html file for distribution
+* [jshint](https://github.com/gruntjs/grunt-contrib-jshint) - JSHint
+* [uglify](https://github.com/gruntjs/grunt-contrib-uglify) - Compresses and minifies all JavaScript files
+* [imagemin:dist](https://github.com/gruntjs/grunt-contrib-imagemin) - Compresses and minify images
+* [htmlmin:dist](https://github.com/gruntjs/grunt-contrib-htmlmin) - Minify HTML
 
 
