@@ -50,8 +50,6 @@ module.exports = generators.Base.extend({
     prompting: function() {
         this.log(yosay('Welcome to ' + chalk.yellow.bold('NSWD Angular') + ' Generator!\n'));
         
-        var done = this.async();
-        
         var ngAppNamePrompt = {
             type: 'input',
             name: 'ngappname',
@@ -64,7 +62,7 @@ module.exports = generators.Base.extend({
             name: 'dependencies',
             message: 'Which JS Libraries would you like to include?',
             choices: [{
-                name: 'lodash: ^4.6.1',
+                name: 'lodash: ^4.13.1',
                 value: 'lodash',
                 checked: true
             },{
@@ -85,7 +83,7 @@ module.exports = generators.Base.extend({
             promptArray.push(dependencyPrompt);
         }
         
-        var callback = function(answers) {
+        return this.prompt(promptArray).then(function(answers) {
             this.config.set('ngappname', _.camelCase(answers.ngappname));
             this.config.save();
             
@@ -104,14 +102,11 @@ module.exports = generators.Base.extend({
                 chip.info('angular-loading-bar: ^0.8.0');
                 chip.info('bootstrap-css-only: ^3.3.6\n');
                 chip('Additional libraries will be installed:');
-                this.includeLodash ? chip.info('lodash: ^4.6.1') : chip.error('lodash: ^4.6.1');
+                this.includeLodash ? chip.info('lodash: ^4.13.1') : chip.error('lodash: ^4.13.1');
                 this.includeMoment ? chip.info('moment: ^2.12.0') : chip.error('moment: ^2.12.0');
                 this.includeAngularUIUtils ? chip.info('angular-ui-utils: ^3.0.0\n') : chip.error('angular-ui-utils: ^3.0.0\n');
             }
-            done();
-        };
-        
-        this.prompt(promptArray, callback.bind(this));
+        }.bind(this));
     },
     configuring: function() {
     },
@@ -171,7 +166,7 @@ module.exports = generators.Base.extend({
             bowerJson.dependencies['bootstrap-css-only'] = '^3.3.6';
             bowerJson.devDependencies['angular-mocks'] = '^1.5.3';
             if(this.includeLodash) {
-                bowerJson.dependencies['lodash'] = '^4.6.1';
+                bowerJson.dependencies['lodash'] = '^4.13.1';
             }
             if(this.includeMoment) {
                 bowerJson.dependencies['moment'] = '^2.12.0';

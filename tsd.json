@@ -6,13 +6,13 @@
   "bundle": "typings/tsd.d.ts",
   "installed": {
     "mocha/mocha.d.ts": {
-      "commit": "9f0f926a12026287b5a4a229e5672c01e7549313"
+      "commit": "7ad4e09016898d9c4837e250121fef2aedbecaaa"
     },
     "node/node.d.ts": {
-      "commit": "9f0f926a12026287b5a4a229e5672c01e7549313"
+      "commit": "7ad4e09016898d9c4837e250121fef2aedbecaaa"
     },
     "lodash/lodash.d.ts": {
-      "commit": "9f0f926a12026287b5a4a229e5672c01e7549313"
+      "commit": "7ad4e09016898d9c4837e250121fef2aedbecaaa"
     }
   }
 }
