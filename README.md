@@ -7,7 +7,7 @@ helpful to start your work of building Angular application.
 
 ## Prerequisites
 
-In order to use this generator-nswebangular, you'll need to install the latest version of [nodeJS](https://nodejs.org/en/download/). 
+In order to use this generator-nswebangular, you'll need to install the latest version of [nodeJS](https://nodejs.org/en/download/) and for Windows users [Ruby](http://rubyinstaller.org/downloads/). 
 Once when you install the latest version of nodeJS, or you already have it, you'll need to install globally following packages using 
 node package manager (npm):
 * yo
@@ -18,7 +18,16 @@ node package manager (npm):
 
 To do so, you can just simply run npm command
 ```
-npm yo generator-nswebangular grunt grunt-cli bower -g install
+npm install -g yo generator-nswebangular grunt grunt-cli bower
+```
+
+Once when you install Ruby or you already have it, you'll need to install following ruby gems (required for Grunt tasks):
+* sass
+* compass
+
+To do so, you can just simply run command
+```
+gem install sass compass
 ```
 
 Once you are done with installation of all prerequisites, you'll be good to go to use generator-nswebangular.
