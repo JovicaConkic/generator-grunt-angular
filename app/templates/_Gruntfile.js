@@ -419,10 +419,9 @@ module.exports = function (grunt) {
       dev: {
         options: {
           compass: true,
-		  noCache: true,
-		  sourcemap: 'none',
-          style: 'expanded',
-          banner: '<%- tag.banner %>'
+		      noCache: true,
+		      sourcemap: 'none',
+          style: 'expanded'
         },
         files: {
           '<%- project.assets %>/css/style.css': '<%- project.css %>'
@@ -431,13 +430,12 @@ module.exports = function (grunt) {
       dist: {
         options: {
           compass: true,
-		  noCache: true,
-		  sourcemap: 'none',
-          style: 'compressed',
-          banner: '<%- tag.banner %>'
+		      noCache: true,
+		      sourcemap: 'none',
+          style: 'compressed'
         },
         files: {
-          '<%- project.dist_src %>/css/style.css': '<%- project.css %>'
+          '<%- project.assets %>/css/style.css': '<%- project.css %>'
         }
       }
     },
@@ -606,10 +604,10 @@ module.exports = function (grunt) {
    * Then clean, copy, minify and optimize content for distribution 
    */
   grunt.registerTask('publish', [
+    'sass:dist',
     'test',
     'clean',
     'copy',
-    'sass:dist',
     'bump-only:minor',
     'ngconstant:dist',
     'filerev:dist',
