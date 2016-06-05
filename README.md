@@ -472,10 +472,10 @@ grunt publish
 Grunt publish snippet:
 ```javascript
 grunt.registerTask('publish', [
+    'sass:dist',
     'test',
     'clean',
     'copy',
-    'sass:dist',
     'bump-only:minor',
     'ngconstant:dist',
     'filerev:dist',
@@ -489,10 +489,10 @@ grunt.registerTask('publish', [
 ```
 
 Grunt default task contains following grunt sub-tasks:
+* [sass:dist](https://github.com/gruntjs/grunt-contrib-sass) - SCSS/SASS compiler for distribution (compressed CSS)
 * [test](#grunt-test) - Runs grunt test task
 * [clean](https://github.com/gruntjs/grunt-contrib-clean) - Cleans distribution (dist) files and folders
 * [copy](https://github.com/gruntjs/grunt-contrib-copy) - Copy app files and folders in dist directory
-* [sass:dist](https://github.com/gruntjs/grunt-contrib-sass) - SCSS/SASS compiler for distribution (compressed CSS)
 * [bump-only:minor](https://github.com/vojtajina/grunt-bump) - Bump package version (minor) for distribution and updates config.json build version
 * [ngconstant:dist](https://github.com/werk85/grunt-ng-constant) - Used to create angular constant/config file (distribution build version)
 * [filerev:dist](https://github.com/yeoman/grunt-filerev) - Static asset revisioning through file content hash
