@@ -20,12 +20,13 @@ module.exports = generators.Base.extend({
     
     writing: function() {
         var fileNameFragment = getFileNameFragment(this.name);
+        var formatedName = getFormatedName(this.name);
         
         this.fs.copyTpl(
             this.templatePath('ng-controller.js'),
             this.destinationPath('app/assets/app/controllers/' + fileNameFragment + '.controller.js'),
             {
-                ctrlName: _.camelCase(this.name),
+                ctrlName: _.camelCase(formatedName),
                 appName: this.config.get('ngappname'),
                 name: _.startCase(fileNameFragment)
             }
@@ -44,6 +45,14 @@ module.exports = generators.Base.extend({
                 ctrlName = ctrlName.substring(0, ctrlIndex);
             }
             return _.kebabCase(ctrlName);
+        }
+        
+        function getFormatedName(ctrlName) {
+            var ctrlIndex = ctrlName.indexOf('Ctrl');
+            if(ctrlIndex < 0 || ctrlIndex !== (ctrlName.length - 4)) {
+                ctrlName = ctrlName + 'Ctrl';
+            }
+            return ctrlName;
         }
     }
 });

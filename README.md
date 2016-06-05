@@ -77,7 +77,7 @@ Generates a controller in `app/assets/app/controllers`.
 
 Example:
 ```bash
-yo nswebangular:controller contactCtrl
+yo nswebangular:controller contact
 ```
 
 Produces `app/assets/app/controllers/contact.controller.js`:
