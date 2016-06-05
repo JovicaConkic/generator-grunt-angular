@@ -66,7 +66,7 @@ module.exports = generators.Base.extend({
                 value: 'lodash',
                 checked: true
             },{
-                name: 'moment: ^2.12.0',
+                name: 'moment: ^2.13.0',
                 value: 'momentjs',
                 checked: true
             },{
@@ -94,16 +94,16 @@ module.exports = generators.Base.extend({
                 
                 this.log('\n');
                 chip('The required libraries will be installed:')
-                chip.info('angular: ^1.5.3');
-                chip.info('angular-route: ^1.5.3');
-                chip.info('angular-animate: ^1.5.3');
-                chip.info('angular-mocks: ^1.5.3');
-                chip.info('angular-bootstrap: ^1.2.5');
-                chip.info('angular-loading-bar: ^0.8.0');
+                chip.info('angular: ^1.5.6');
+                chip.info('angular-route: ^1.5.6');
+                chip.info('angular-animate: ^1.5.6');
+                chip.info('angular-mocks: ^1.5.6');
+                chip.info('angular-bootstrap: ^1.3.3');
+                chip.info('angular-loading-bar: ^0.9.0');
                 chip.info('bootstrap-css-only: ^3.3.6\n');
                 chip('Additional libraries will be installed:');
                 this.includeLodash ? chip.info('lodash: ^4.13.1') : chip.error('lodash: ^4.13.1');
-                this.includeMoment ? chip.info('moment: ^2.12.0') : chip.error('moment: ^2.12.0');
+                this.includeMoment ? chip.info('moment: ^2.13.0') : chip.error('moment: ^2.13.0');
                 this.includeAngularUIUtils ? chip.info('angular-ui-utils: ^3.0.0\n') : chip.error('angular-ui-utils: ^3.0.0\n');
             }
         }.bind(this));
@@ -158,18 +158,18 @@ module.exports = generators.Base.extend({
                 devDependencies: {}
             };
             
-            bowerJson.dependencies['angular'] = '^1.5.3';
-            bowerJson.dependencies['angular-animate'] = '^1.5.3';
-            bowerJson.dependencies['angular-bootstrap'] = '^1.2.5';
-            bowerJson.dependencies['angular-loading-bar'] = '^0.8.0';
-            bowerJson.dependencies['angular-route'] = '^1.5.3';
+            bowerJson.dependencies['angular'] = '^1.5.6';
+            bowerJson.dependencies['angular-animate'] = '^1.5.6';
+            bowerJson.dependencies['angular-bootstrap'] = '^1.3.3';
+            bowerJson.dependencies['angular-loading-bar'] = '^0.9.0';
+            bowerJson.dependencies['angular-route'] = '^1.5.6';
             bowerJson.dependencies['bootstrap-css-only'] = '^3.3.6';
-            bowerJson.devDependencies['angular-mocks'] = '^1.5.3';
+            bowerJson.devDependencies['angular-mocks'] = '^1.5.6';
             if(this.includeLodash) {
                 bowerJson.dependencies['lodash'] = '^4.13.1';
             }
             if(this.includeMoment) {
-                bowerJson.dependencies['moment'] = '^2.12.0';
+                bowerJson.dependencies['moment'] = '^2.13.0';
             }
             if(this.includeAngularUIUtils) {
                 bowerJson.dependencies['angular-ui-utils'] = '^3.0.0';
