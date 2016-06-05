@@ -1,7 +1,7 @@
 (function () {
     'use strict';
 
-    angular.module('<%= appName %>').factory('<%= directiveName %>', <%= directiveName %>);
+    angular.module('<%= appName %>').directive('<%= directiveName %>', <%= directiveName %>);
 
     <%= directiveName %>.$inject = [];
     

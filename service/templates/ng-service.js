@@ -1,21 +1,15 @@
 (function () {
     'use strict';
 
-    angular.module('<%= appName %>').factory('<%= factoryName %>', <%= factoryName %>);
+    angular.module('<%= appName %>').service('<%= serviceName %>', <%= serviceName %>);
 
-    <%= factoryName %>.$inject = [];
+    <%= serviceName %>.$inject = [];
     
     /* @ngInject */
-    function <%= factoryName %>() {
+    function <%= serviceName %>() {
         /* jshint validthis: true */
-        var service = {
-            activate: _activate
+        this.activate = function() {
+
         };
-
-        return service;
-
-        function _activate() {
-
-        }
     }
 })();

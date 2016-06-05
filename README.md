@@ -62,7 +62,10 @@ Available generators (sub-generators):
 * [nswebangular:controller](#controller)
 * [nswebangular:directive](#directive)
 * [nswebangular:filter](#filter)
+* [nswebangular:factory](#factory)
+* [nswebangular:provider](#provider)
 * [nswebangular:service](#service)
+* [nswebangular:view](#view)
 
 ### App
 Sets up a new AngularJS app, generating Grunt file with tasks and all the boilerplate you need to get started. The app generator also optionally installs additional AngularJS modules and libraries, such are Moment, Lodash and Angular UI Utils.
@@ -142,7 +145,7 @@ Produces `app/assets/app/directives/my-directive.directive.js`:
 (function () {
     'use strict';
 
-    angular.module('app').factory('myDirective', myDirective);
+    angular.module('app').directive('myDirective', myDirective);
 
     myDirective.$inject = [];
     
@@ -177,7 +180,7 @@ Produces `app/assets/app/filters/contact.filter.js`:
 (function () {
     'use strict';
 
-    angular.module('app').factory('contact', contact);
+    angular.module('app').filter('contact', contact);
 
     function contact() {
         return contactFilter;
@@ -189,8 +192,76 @@ Produces `app/assets/app/filters/contact.filter.js`:
 })();
 ```
 
+### Factory
+Generates an AngularJS factory in `app/assets/app/factories`.
+
+Example:
+```bash
+yo nswebangular:factory myFactory
+```
+
+Produces `app/assets/app/factories/my-factory.factory.js`:
+```javascript
+(function () {
+    'use strict';
+
+    angular.module('app').factory('myFactory', myFactory);
+
+    myFactory.$inject = [];
+    
+    /* @ngInject */
+    function myFactory() {
+        /* jshint validthis: true */
+        var factory = {
+            activate: _activate
+        };
+
+        return factory;
+
+        function _activate() {
+
+        }
+    }
+})();
+```
+
+### Provider
+Generates an AngularJS provider in `app/assets/app/providers`.
+
+Example:
+```bash
+yo nswebangular:provider myProvider
+```
+
+Produces `app/assets/app/providers/my-provider.provider.js`:
+```javascript
+(function () {
+    'use strict';
+
+    angular.module('app').provider('myProvider', myProvider);
+    
+    function myProvider() {
+        /* jshint validthis: true */
+        this.name = 'Default';
+        
+        this.$get = [function() {
+            var name = this.name;
+            return {
+                sayHello: function() {
+                    return "Hello, " + name + "!";
+                }
+            }
+        }];
+
+        this.setName = function(name) {
+            this.name = name;
+        };
+    }
+})();
+```
+
 ### Service
-Generates an AngularJS service (factory) in `app/assets/app/services`.
+Generates an AngularJS service in `app/assets/app/services`.
 
 Example:
 ```bash
@@ -202,24 +273,33 @@ Produces `app/assets/app/services/my-service.service.js`:
 (function () {
     'use strict';
 
-    angular.module('app').factory('myService', myService);
+    angular.module('app').service('myService', myService);
 
     myService.$inject = [];
     
     /* @ngInject */
     function myService() {
         /* jshint validthis: true */
-        var service = {
-            activate: _activate
+        this.activate = function() {
+
         };
-
-        return service;
-
-        function _activate() {
-
-        }
     }
 })();
+```
+
+### View
+Generates a view in `app/assets/app/views`.
+
+Example:
+```bash
+yo nswebangular:view myView
+```
+
+Produces `app/assets/app/views/my-view.html`:
+```html
+<div>
+    <h1>myView</h1>
+</div>
 ```
 
 ## Application Directory Layout
@@ -235,7 +315,9 @@ app/                            --> all of the source files for the application
         home.controller.js      --> home controller logic
         shell.controller.js     --> shell controller logic
       directives/               --> angular app directives directory
+      factories/                --> angular app factories directory
       filters/                  --> angular app filters directory
+      providers/                --> angular app providers directory
       services/                 --> angular app services directory
       views/                    --> angular app partial views directory
         about.html              --> about partial view template

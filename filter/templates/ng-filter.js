@@ -1,7 +1,7 @@
 (function () {
     'use strict';
 
-    angular.module('<%= appName %>').factory('<%= filterName %>', <%= filterName %>);
+    angular.module('<%= appName %>').filter('<%= filterName %>', <%= filterName %>);
 
     function <%= filterName %>() {
         return <%= filterName %>Filter;

@@ -184,7 +184,9 @@ module.exports = generators.Base.extend({
             this.directory('app/fonts', 'app/assets/fonts');
             this.directory('app/images', 'app/assets/images');
             this.directory('app/app/directives', 'app/assets/app/directives');
+            this.directory('app/app/factories', 'app/assets/app/factories');
             this.directory('app/app/filters', 'app/assets/app/filters');
+            this.directory('app/app/providers', 'app/assets/app/providers');
             this.directory('app/app/services', 'app/assets/app/services');
         },
         appTestFiles: function() {

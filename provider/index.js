@@ -9,17 +9,17 @@ module.exports = generators.Base.extend({
         generators.Base.apply(this, arguments);
         
         this.argument('name', { type: String, required: true });
-        chip('Service Name (arg): ' + this.name);
+        chip('Provider Name (arg): ' + this.name);
     },
     
     writing: function() {
         var fileNameFragment = _.kebabCase(this.name);
         
         this.fs.copyTpl(
-            this.templatePath('ng-service.js'),
-            this.destinationPath('app/assets/app/services/' + fileNameFragment + '.service.js'),
+            this.templatePath('ng-provider.js'),
+            this.destinationPath('app/assets/app/providers/' + fileNameFragment + '.provider.js'),
             {
-                serviceName: _.camelCase(this.name),
+                providerName: _.camelCase(this.name),
                 appName: this.config.get('ngappname')
             }
         )
