@@ -11,9 +11,9 @@
             var name = this.name;
             return {
                 sayHello: function() {
-                    return "Hello, " + name + "!";
+                    return 'Hello, ' + name + '!';
                 }
-            }
+            };
         }];
 
         this.setName = function(name) {
