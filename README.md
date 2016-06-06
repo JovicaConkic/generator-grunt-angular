@@ -338,7 +338,13 @@ e2e-tests/                      --> end-to-end tests directory
     index.spec.js               --> end-to-end scenarios to be run by Protractor
   protractor.conf.js            --> Protractor config file
 node_modules/                   --> npm managed libraries used by grunt
-src/                            --> SCSS/SASS files, or other JS files to be used with Grunt's uglify task
+src/                            --> source directory used as SCSS/SASS compiling source
+  scss/                         --> SCSS/SASS directory
+    mixins/                     --> mixins
+    modules/                    --> common modules
+    partials/                   --> partials
+    vendor/                     --> CSS or Sass from other projects
+    style.scss                  --> primary Sass file
 unit-tests/                     --> unit tests directory
   specs/                        --> scenarios directory to be run by Karma
     demo.spec.js                --> unit test scenarios to be run by Karma
