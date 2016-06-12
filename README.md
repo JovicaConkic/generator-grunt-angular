@@ -1,8 +1,7 @@
 # generator-nswebangular [![Build Status](https://secure.travis-ci.org/JovicaConkic/generator-nswebangular.svg?branch=master)](http://travis-ci.org/JovicaConkic/generator-nswebangular) [![Dependency Status](https://david-dm.org/JovicaConkic/generator-nswebangular.svg)](https://david-dm.org/JovicaConkic/generator-nswebangular) [![devDependency Status](https://david-dm.org/JovicaConkic/generator-nswebangular/dev-status.svg)](https://david-dm.org/JovicaConkic/generator-nswebangular#info=devDependencies) [![npm version](https://badge.fury.io/js/generator-nswebangular.svg)](https://badge.fury.io/js/generator-nswebangular)
 > Yeoman generator for AngularJS projects with GruntJS
 
-generator-nswebangular is one of the many generators for building a new Angular SPA (Single Page Application) based on 
-yeoman generator. It is created as a sum of everything that you can find all over www and which is really necessary and 
+generator-nswebangular is yeoman based generator for building a new Angular SPA (Single Page Application). It is created as a sum of everything that you can find all over www and which is really necessary and 
 helpful to start your work of building Angular application.
 
 ## Prerequisites
@@ -364,12 +363,11 @@ package.json                    --> package definition manifest for Node/npm
 
 ## Gruntfile.js & Grunt tasks
 
-Gruntfile.js contains next 4 main grunt tasks:
+Gruntfile.js contains following main grunt tasks:
 
 * [grunt](#grunt) or [grunt default](#grunt)
 * [grunt build](#grunt-build)
 * [grunt test](#grunt-test)
-* [grunt publish](#grunt-publish)
 
 ### Grunt
 Grunt default task runner.
@@ -391,7 +389,6 @@ grunt.registerTask('default', [
     'jshint',
     'injector:dev',
     'injector:bower',
-    'imagemin:dev',
     'connect:livereload',
     'open',
     'karma:continuous:start',
@@ -405,14 +402,13 @@ Grunt default task contains following grunt sub-tasks:
 * [jshint](https://github.com/gruntjs/grunt-contrib-jshint) - JSHint
 * [injector:dev](https://github.com/klei/grunt-injector) - Inject references (js files and stylesheets) into a html file
 * [injector:bower](https://github.com/klei/grunt-injector) - Inject bower references into a html file
-* [imagemin:dev](https://github.com/gruntjs/grunt-contrib-imagemin) - Compresses and minify images
 * [connect:livereload](https://github.com/gruntjs/grunt-contrib-connect) - Starts a local webserver with rewrite rules and livereload
 * [open](https://github.com/jsoverson/grunt-open) - Open the webserver in the browser
 * [karma:continuous:start](https://github.com/karma-runner/grunt-karma) - Starts karma server for watch task
-* [watch](https://github.com/gruntjs/grunt-contrib-watch) - Watching development files and run concat/compile tasks
+* [watch](https://github.com/gruntjs/grunt-contrib-watch) - Watching development files and run compile tasks
 
 ### Grunt Build
-Grunt build task runner.
+Grunt build task runner. Running tests, applying new build version, copy, minify application files into dist directory, adding file revisions and perform content optimization for distribution.
 
 Example:
 ```bash
@@ -422,24 +418,43 @@ grunt build
 Grunt build snippet:
 ```javascript
 grunt.registerTask('build', [
-    'sass:dev',
-    'bump-only:patch',
-    'ngconstant:dev',
+    'clean',
+    'bump-only:'+ version,
+    'sass:dist',
+    'test',
+    'copy',
     'jshint',
-    'injector:dev',
+    'ngconstant:dist',
+    'uglify',
+    'filerev:dist',
+    'injector:dist',
     'injector:bower',
-    'imagemin:dev'
+    'imagemin:dist',
+    'htmlmin:dist'
   ]);
 ```
 
 Grunt build task contains following grunt sub-tasks:
-* [sass:dev](https://github.com/gruntjs/grunt-contrib-sass) - SCSS/SASS compiler for development (expanded CSS style)
-* [bump-only:patch](https://github.com/vojtajina/grunt-bump) - Bump package version (patch) for development and updates config.json build version
-* [ngconstant:dev](https://github.com/werk85/grunt-ng-constant) - Used to create angular constant/config file (development build version)
+* [clean](https://github.com/gruntjs/grunt-contrib-clean) - Cleans distribution (dist) files and folders
+* [bump-only:patch](https://github.com/vojtajina/grunt-bump) - Bump package version (patch by default) for distribution and updates config.json and package.json version
+* [sass:dist](https://github.com/gruntjs/grunt-contrib-sass) - SCSS/SASS compiler for distribution (compressed CSS)
+* [test](#grunt-test) - Runs grunt test task
+* [copy](https://github.com/gruntjs/grunt-contrib-copy) - Copy app files and folders in dist directory
 * [jshint](https://github.com/gruntjs/grunt-contrib-jshint) - JSHint
-* [injector:dev](https://github.com/klei/grunt-injector) - Inject references(js files and stylesheets) into a html file
-* [injector:bower](https://github.com/klei/grunt-injector) - Inject bower references into a html file
-* [imagemin:dev](https://github.com/gruntjs/grunt-contrib-imagemin) - Compresses and minify images
+* [ngconstant:dist](https://github.com/werk85/grunt-ng-constant) - Used to create angular constant/config file (distribution build version)
+* [uglify](https://github.com/gruntjs/grunt-contrib-uglify) - Compresses and minifies all JavaScript files
+* [filerev:dist](https://github.com/yeoman/grunt-filerev) - Static asset revisioning through file content hash
+* [injector:dist](https://github.com/klei/grunt-injector) - Inject references (js files and stylesheets) into a html file for distribution
+* [injector:bower](https://github.com/klei/grunt-injector) - Inject bower references into a html file for distribution
+* [imagemin:dist](https://github.com/gruntjs/grunt-contrib-imagemin) - Compresses and minify images
+* [htmlmin:dist](https://github.com/gruntjs/grunt-contrib-htmlmin) - Minify HTML
+
+Grunt build task can take a option `--semver`. By default this option is included and its value is `--semver=patch`. This option will tell bump grunt task which version application will have. This option could have following values: patch, minor, major, prepatch, preminor, premajor, prerelease  etc. More about these values you can check out [here](https://github.com/vojtajina/grunt-bump).
+
+Build with minor updated version example:
+```bash
+grunt build --semver=minor
+```
 
 ### Grunt Test
 Grunt test task runner.
@@ -466,48 +481,6 @@ Grunt test task contains following grunt sub-tasks:
 * [connect:test](https://github.com/gruntjs/grunt-contrib-connect) - Starts a local webserver with rewrite rules for testing purpose
 * [protractor:e2e](https://github.com/teerapap/grunt-protractor-runner) - Runs protractor's end-to-end tasks
 * [karma:unit](https://github.com/karma-runner/grunt-karma) - Runs karma unit test
-
-### Grunt Publish
-Grunt publish task runner. Running tests, applying new build version, copy minified application files into dist directory, adding file revisions and perform content optimization for distribution.  
-
-Example:
-```bash
-grunt publish
-```
-
-Grunt publish snippet:
-```javascript
-grunt.registerTask('publish', [
-    'sass:dist',
-    'test',
-    'clean',
-    'copy',
-    'bump-only:minor',
-    'ngconstant:dist',
-    'filerev:dist',
-    'injector:dist',
-    'injector:bower',
-    'jshint',
-    'uglify',
-    'imagemin:dist',
-    'htmlmin:dist'
-  ]);
-```
-
-Grunt default task contains following grunt sub-tasks:
-* [sass:dist](https://github.com/gruntjs/grunt-contrib-sass) - SCSS/SASS compiler for distribution (compressed CSS)
-* [test](#grunt-test) - Runs grunt test task
-* [clean](https://github.com/gruntjs/grunt-contrib-clean) - Cleans distribution (dist) files and folders
-* [copy](https://github.com/gruntjs/grunt-contrib-copy) - Copy app files and folders in dist directory
-* [bump-only:minor](https://github.com/vojtajina/grunt-bump) - Bump package version (minor) for distribution and updates config.json build version
-* [ngconstant:dist](https://github.com/werk85/grunt-ng-constant) - Used to create angular constant/config file (distribution build version)
-* [filerev:dist](https://github.com/yeoman/grunt-filerev) - Static asset revisioning through file content hash
-* [injector:dist](https://github.com/klei/grunt-injector) - Inject references (js files and stylesheets) into a html file for distribution
-* [injector:bower](https://github.com/klei/grunt-injector) - Inject bower references into a html file for distribution
-* [jshint](https://github.com/gruntjs/grunt-contrib-jshint) - JSHint
-* [uglify](https://github.com/gruntjs/grunt-contrib-uglify) - Compresses and minifies all JavaScript files
-* [imagemin:dist](https://github.com/gruntjs/grunt-contrib-imagemin) - Compresses and minify images
-* [htmlmin:dist](https://github.com/gruntjs/grunt-contrib-htmlmin) - Minify HTML
 
 ## Testing
 
@@ -543,7 +516,7 @@ e2e-tests/                      --> end-to-end tests directory
 ### Travis CI
 
 [Travis CI](https://travis-ci.org/) is a continuous integration service, which can monitor GitHub for new commits
-to your repository and execute scripts such as building the app or running tests. The angular-seed
+to your repository and execute scripts such as building the app or running tests. The generator-nswebangular and also generated angular application
 project contains a Travis configuration file, `.travis.yml`, which will cause Travis to run your
 tests when you push to GitHub.
 

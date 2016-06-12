@@ -21,7 +21,8 @@ var mountFolder = function (connect, dir) {
 /**
  * Grunt module
  */
-module.exports = function (grunt) {  
+module.exports = function (grunt) {
+  var version = grunt.option('semver') || 'patch';
 
   /**
    * Dynamically load npm tasks
@@ -40,10 +41,10 @@ module.exports = function (grunt) {
       src: 'app/assets',
       app: 'app',
       dist: 'dist',
-	  dist_src: 'dist/assets',
+	    dist_src: 'dist/assets',
       e2e_test: 'e2e-tests',
       unit_test: 'unit-tests',
-	  index: [
+	    index: [
         '<%- project.app %>/index.html'
       ],
       assets: '<%- project.app %>/assets',
@@ -65,7 +66,6 @@ module.exports = function (grunt) {
       options: {
         ignorePath: ['<%- project.app %>/', '<%- project.dist %>/'],
         addRootSlash: false,
-        min: true,
         template: '<%- project.app %>/index.html'
       },
       dev: {
@@ -77,7 +77,10 @@ module.exports = function (grunt) {
           ]
         }
       },
-	  dist: {
+	    dist: {
+        options: {
+          min: true
+        },
         files: {
           '<%- project.dist %>/index.html': [
             '<%- project.dist_src %>/js/**/*.js',
@@ -89,7 +92,8 @@ module.exports = function (grunt) {
       bower: {
         options: {
           starttag: '<!-- bower:{{ext}} -->',
-          endtag: '<!-- endbower -->'
+          endtag: '<!-- endbower -->',
+          min: true
         },
         files: {
           '<%- project.app %>/index.html': 'bower.json'
@@ -118,10 +122,10 @@ module.exports = function (grunt) {
      * https://github.com/vojtajina/grunt-bump
      * Bump package version, create tag, commit, push .
      */
-	bump: {
-	  options: {
-		files: ['config.json']
-	  }
+	  bump: {
+	    options: {
+		    files: ['package.json', 'config.json']
+	    }
     },
     
     /**
@@ -129,23 +133,22 @@ module.exports = function (grunt) {
      * https://github.com/yeoman/grunt-filerev
      * Static asset revisioning through file content hash
      */
-	filerev: {
-	  dist: {
+	  filerev: {
+	    dist: {
         options: {
-		  encoding: 'utf8',
+		      encoding: 'utf8',
           algorithm: 'md5',
-		  length: 8
+		      length: 8
         },
         files: [{
           src: [
-		      '<%- project.dist_src %>/app/**/*.js',
-			  '<%- project.dist_src %>/js/**/*.js',
-			  '<%- project.dist_src %>/css/**/*.css'
-            ]
-          }
-        ]
+		        '<%- project.dist_src %>/app/**/*.js',
+			      '<%- project.dist_src %>/js/**/*.js',
+			      '<%- project.dist_src %>/css/**/*.css'
+          ]
+        }]
       }
-	},
+	  },
 
     /**
      * Connect port/livereload
@@ -160,33 +163,33 @@ module.exports = function (grunt) {
       },
       livereload: {
         options: {
-		  base: 'app',
+		    base: 'app',
           middleware: function (connect, options) {
             var rules = [
                 '!\\.html|\\.js|\\.css|\\.svg|\\.jp(e?)g|\\.png|\\.gif$ /index.html [L]'
             ];
             return [
-			  rewrite(rules),
-			  lrSnippet,
-			  mountFolder(connect, options.base)
-			];
+			        rewrite(rules),
+			        lrSnippet,
+			        mountFolder(connect, options.base)
+			      ];
           }
         }
       },
       test: {
-	    options: {
-	      base: 'app',
+	      options: {
+	        base: 'app',
           middleware: function (connect, options) {
             var rules = [
                 '!\\.html|\\.js|\\.css|\\.svg|\\.jp(e?)g|\\.png|\\.gif$ /index.html [L]'
             ];
             return [
-			  rewrite(rules),
-			  mountFolder(connect, options.base)
-			];
+			        rewrite(rules),
+			        mountFolder(connect, options.base)
+			      ];
           }
-		}
-	  }
+		    }
+	    }
     },
     
     /**
@@ -195,13 +198,13 @@ module.exports = function (grunt) {
      * Copy files and folders
      */
     copy: {
-	  main: {
+	    main: {
         expand: true,
-		cwd: '<%- project.app %>/',
-		src: '**',
-		dest: '<%- project.dist %>',
+		    cwd: '<%- project.app %>/',
+        src: ['**/*', '!**/assets/css/**', '!**/assets/js/**', '!**/assets/app/**/*.js'],
+		    dest: '<%- project.dist %>',
+	    },
 	  },
-	},
     
     /**
      * NG Constant
@@ -212,14 +215,14 @@ module.exports = function (grunt) {
       dev: {
         options: {
           dest: '<%- project.assets %>/js/config.js',
-		  wrap: "(function () {\n'use strict';\n {%= __ngModule %} })();",
+		      wrap: "(function () {\n'use strict';\n {%= __ngModule %} })();",
           name: 'config',
-		  space: ' '
+		      space: ' '
         },
-		constants: function () {
-		  var pkg = grunt.file.readJSON('config.json');
-		  pkg.env = 'DEV';
-		  pkg.description = 'We are in development!';
+		    constants: function () {
+		      var pkg = grunt.file.readJSON('config.json');
+		      pkg.env = 'DEV';
+		      pkg.description = 'We are in development!';
           return {
             envPackage: pkg
           };
@@ -228,17 +231,17 @@ module.exports = function (grunt) {
           debug: false
         }
       },
-	  dist: {
+	    dist: {
         options: {
-          dest: '<%- project.dist_src %>/js/config.js',
-		  wrap: "(function () {\n'use strict';\n {%= __ngModule %} })();",
+          dest: '<%- project.assets %>/js/config.js',
+		      wrap: "(function () {\n'use strict';\n {%= __ngModule %} })();",
           name: 'config',
-		  space: ' '
+		      space: ' '
         },
         constants: function () {
-		  var pkg = grunt.file.readJSON('config.json');
-		  pkg.env = 'PROD';
-		  pkg.description = 'We are in production!';
+		      var pkg = grunt.file.readJSON('config.json');
+		      pkg.env = 'PROD';
+		      pkg.description = 'We are in production!';
           return {
             envPackage: pkg
           };
@@ -254,26 +257,24 @@ module.exports = function (grunt) {
      * https://github.com/gruntjs/grunt-contrib-htmlmin
      * Minify HTML
      */
-	htmlmin: {
+	  htmlmin: {
       dist: {
         options: {
           removeComments: true,
           collapseWhitespace: true
         },
-        files: [
-          {
-            expand: true,
-            cwd: '<%- project.dist %>/',
-            src: '*.html',
-            dest: '<%- project.dist %>/'
-          },
-		  {
-            expand: true,
-            cwd: '<%- project.dist_src %>/app/',
-            src: '**/*.html',
-            dest: '<%- project.dist_src %>/app/'
-          }
-        ]
+        files: [{
+          expand: true,
+          cwd: '<%- project.dist %>/',
+          src: '*.html',
+          dest: '<%- project.dist %>/'
+        },
+        {
+          expand: true,
+          cwd: '<%- project.dist_src %>/app/',
+          src: '**/*.html',
+          dest: '<%- project.dist_src %>/app/'
+        }]
       }
     },
 
@@ -284,31 +285,13 @@ module.exports = function (grunt) {
      */
     jshint: {
       files: [
-          '<%- project.src %>/js/**/*.js',
-          '<%- project.src %>/app/**/*.js',
-          '<%- project.e2e_test %>/specs/**/*.js',
-		  '<%- project.unit_test %>/specs/**/*.js'
+        '<%- project.src %>/js/{,*/}*.js',
+        '<%- project.src %>/app/{,*/}*.js',
+        '<%- project.e2e_test %>/specs/{,*/}*.js',
+        '<%- project.unit_test %>/specs/{,*/}*.js'
       ],
       options: {
         jshintrc: '.jshintrc'
-      }
-    },
-
-    /**
-     * Concatenate JavaScript files
-     * https://github.com/gruntjs/grunt-contrib-concat
-     * Imports all .js files and appends project banner
-     */
-    concat: {
-      dev: {
-        files: {
-          '<%- project.assets %>/js/scripts.min.js': '<%- project.js %>'
-        }
-      },
-      options: {
-        stripBanners: true,
-        nonull: true,
-        banner: '<%- tag.banner %>'
       }
     },
 
@@ -322,30 +305,36 @@ module.exports = function (grunt) {
         banner: "<%- tag.banner %>",
         report: 'min',
         mangle: true,
-		compress: {
-		  sequences: true,
-		  dead_code: true,
-		  conditionals: true,
-		  booleans: true,
-		  unused: true,
-		  if_return: true,
-		  join_vars: true,
-		  drop_console: true
-	    }
+		    compress: {
+		      sequences: true,
+		      dead_code: true,
+		      conditionals: true,
+		      booleans: true,
+		      unused: true,
+		      if_return: true,
+		      join_vars: true,
+		      drop_console: true
+	      }
       },
       dist: {
         files: [
           {
             expand: true,
-            cwd: '<%- project.dist_src %>/js/',
+            cwd: '<%- project.src %>/js/',
             src: '**/*.js',
-            dest: '<%- project.dist_src %>/js/'
+            dest: '<%- project.dist_src %>/js/',
+            rename: function(destBase, destPath) {
+		            return destBase+destPath.replace('.js', '.min.js');
+		        }
           },
-		  {
+		      {
             expand: true,
-            cwd: '<%- project.dist_src %>/app/',
+            cwd: '<%- project.src %>/app/',
             src: '**/*.js',
-            dest: '<%- project.dist_src %>/app/'
+            dest: '<%- project.dist_src %>/app/',
+            rename: function(destBase, destPath) {
+		            return destBase+destPath.replace('.js', '.min.js');
+		        }
           }
         ]
       }
@@ -357,45 +346,26 @@ module.exports = function (grunt) {
      * Compresses and minify images
      */
     imagemin: {
-	  dev: {
-	    options: {
-          optimizationLevel: 3,
-          progressive: true,
-          interlaced: true
-        },
-		files: [{
-			expand: true,
-			cwd: '<%- project.assets %>/images/',
-			src: ['**/*.{png,PNG,jpg,JPG,jpeg,JPEG,gif,GIF}'],
-			dest: '<%- project.assets %>/images/'
-		},
-        {
-			expand: true,
-			cwd: '<%- project.app %>/',
-			src: ['*.{png,PNG,jpg,JPG,jpeg,JPEG,gif,GIF,ico,ICO}'],
-			dest: '<%- project.app %>/'
-		}]
-	  },
       dist: {
-	    options: {
+	      options: {
           optimizationLevel: 3,
           progressive: true,
           interlaced: true
         },
-		files: [{
-			expand: true,
-			cwd: '<%- project.dist_src %>/images/',
-			src: ['**/*.{png,PNG,jpg,JPG,jpeg,JPEG,gif,GIF}'],
-			dest: '<%- project.dist_src %>/images/'
-		},
+		    files: [{
+			    expand: true,
+			    cwd: '<%- project.dist_src %>/images/',
+			    src: ['**/*.{png,PNG,jpg,JPG,jpeg,JPEG,gif,GIF}'],
+			    dest: '<%- project.dist_src %>/images/'
+		    },
         {
-			expand: true,
-			cwd: '<%- project.dist %>/',
-			src: ['*.{png,PNG,jpg,JPG,jpeg,JPEG,gif,GIF,ico,ICO}'],
-			dest: '<%- project.dist %>/'
-		}]
-	  }
-	},
+			    expand: true,
+			    cwd: '<%- project.dist %>/',
+			    src: ['*.{png,PNG,jpg,JPG,jpeg,JPEG,gif,GIF,ico,ICO}'],
+			    dest: '<%- project.dist %>/'
+		    }]
+	    }
+	  },
     
     /**
      * Clean
@@ -403,12 +373,10 @@ module.exports = function (grunt) {
      * Clean files and folders
      */
     clean: {
-      dist: ['<%- project.dist_src %>/js/**/*.js',
-			 '<%- project.dist_src %>/app/**/*.js',
-		     '<%- project.dist_src %>/css/*.css',
-             '<%- project.dist_src %>/images/{,*/}*.{png,PNG,jpg,JPG,jpeg,JPEG,gif,GIF,webp,WEBP,svg,SVG}'
+      dist: [
+        '<%- project.dist %>'
 			]
-	},
+	  },
 
     /**
      * Compile Sass/SCSS files
@@ -420,7 +388,6 @@ module.exports = function (grunt) {
         options: {
           compass: true,
 		      noCache: true,
-		      sourcemap: 'none',
           style: 'expanded'
         },
         files: {
@@ -435,7 +402,7 @@ module.exports = function (grunt) {
           style: 'compressed'
         },
         files: {
-          '<%- project.assets %>/css/style.css': '<%- project.css %>'
+          '<%- project.dist_src %>/css/style.min.css': '<%- project.css %>'
         }
       }
     },
@@ -458,21 +425,23 @@ module.exports = function (grunt) {
      */
     watch: {
       scripts: {
-		files: [
-	      '<%- project.assets %>/js/**/*.js',
-		  '<%- project.assets %>/app/**/*.js'
-		],
-		tasks: ['jshint'],
-		options: {
-		  spawn: false
-		}
+		    files: [
+	        '<%- project.assets %>/js/{,*/}*.js',
+		      '<%- project.assets %>/app/{,*/}*.js',
+          '<%- project.e2e_test %>/specs/{,*/}*.js',
+		      '<%- project.unit_test %>/specs/{,*/}*.js'
+		    ],
+		    tasks: ['jshint'],
+		    options: {
+		      spawn: false
+		    }
       },
       karma: {
         files: [
-          '<%- project.src %>/js/**/*.js',
-          '<%- project.src %>/app/**/*.js',
-		  '<%- project.e2e_test %>/specs/**/*.js',
-		  '<%- project.unit_test %>/specs/**/*.js'
+          '<%- project.src %>/js/{,*/}*.js',
+          '<%- project.src %>/app/{,*/}*.js',
+		      '<%- project.e2e_test %>/specs/{,*/}*.js',
+		      '<%- project.unit_test %>/specs/{,*/}*.js'
         ],
         tasks: ['karma:continuous:run']
       },
@@ -485,12 +454,12 @@ module.exports = function (grunt) {
           livereload: LIVERELOAD_PORT
         },
         files: [
-          '<%- project.app %>/**/*.html',
-          '<%- project.assets %>/app/**/*.html',
-          '<%- project.assets %>/css/*.css',
-          '<%- project.assets %>/js/**/*.js',
-          '<%- project.assets %>/app/**/*.js',
-          '<%- project.assets %>/images/**/*.{png,PNG,jpg,JPG,jpeg,JPEG,gif,GIF,webp,WEBP,svg,SVG}'
+          '<%- project.app %>/{,*/}*.html',
+          '<%- project.assets %>/app/{,*/}*.html',
+          '<%- project.assets %>/css/{,*/}*.css',
+          '<%- project.assets %>/js/{,*/}*.js',
+          '<%- project.assets %>/app/{,*/}*.js',
+          '<%- project.assets %>/images/{,*/}*.{png,PNG,jpg,JPG,jpeg,JPEG,gif,GIF,webp,WEBP,svg,SVG}'
         ]
       }
     },
@@ -501,36 +470,35 @@ module.exports = function (grunt) {
      * Webdriver-manager update command  
      */
     shell: {
-	  protractor_update: {
-	    options: {
-	      stdout: true
-		},
-	    command: 'node node_modules/protractor/bin/webdriver-manager update'
-	  }
-	},
+      protractor_update: {
+        options: {
+          stdout: true
+        },
+        command: 'node node_modules/protractor/bin/webdriver-manager update'
+      }
+    },
     
     /**
      * Runs karma unit tests
      * https://github.com/karma-runner/grunt-karma
      */
-	karma: {
-	  options: {
-		configFile: '<%- project.unit_test %>/karma.conf.js',
-	  },
-	  unit: {
+    karma: {
+      options: {
         configFile: '<%- project.unit_test %>/karma.conf.js',
-		port: 9000,
-		singleRun: true,
-		browsers: ['Chrome', 'Firefox']
-	  },
+      },
+      unit: {
+        port: 9000,
+        singleRun: true,
+        browsers: ['Chrome', 'Firefox']
+      },
       continuous: {
-		reporters: 'dots',
-		singleRun: false,
-		browsers: ['PhantomJS'],
-		background: true
-	  },
+        reporters: 'dots',
+        singleRun: false,
+        browsers: ['PhantomJS'],
+        background: true
+      }
     },
-    
+      
     /**
      * Grunt plugin for running Protractor runner
      * https://github.com/teerapap/grunt-protractor-runner 
@@ -538,18 +506,18 @@ module.exports = function (grunt) {
      */
     protractor: {
       options: {
-		configFile: "node_modules/protractor/example/conf.js",
-		noColor: true,
-		debug: false,
-		args: { }
-	  },
-	  e2e: {
+        configFile: "node_modules/protractor/example/conf.js",
+        noColor: true,
+        debug: false,
+        args: { }
+      },
+      e2e: {
         options: {
-		  configFile: "<%- project.e2e_test %>/protractor.conf.js",
+          configFile: "<%- project.e2e_test %>/protractor.conf.js",
           keepAlive: false
-		}
-	  }
-	}
+        }
+      }
+    }
   });
 
   /**
@@ -560,10 +528,8 @@ module.exports = function (grunt) {
     'sass:dev',
     'ngconstant:dev',
     'jshint',
-    //'concat:dev',
     'injector:dev',
     'injector:bower',
-    'imagemin:dev',
     'connect:livereload',
     'open',
     'karma:continuous:start',
@@ -573,16 +539,22 @@ module.exports = function (grunt) {
   /**
    * Build task
    * Run `grunt build` on the command line
-   * Then compress all JS/CSS files
+   * Then clean, copy, minify and optimize content for distribution
    */
   grunt.registerTask('build', [
-    'sass:dev',
-    'bump-only:patch',
-    'ngconstant:dev',
+    'clean',
+    'bump-only:'+ version,
+    'sass:dist',
+    'test',
+    'copy',
     'jshint',
-    'injector:dev',
+    'ngconstant:dist',
+    'uglify',
+    'filerev:dist',
+    'injector:dist',
     'injector:bower',
-    'imagemin:dev'
+    'imagemin:dist',
+    'htmlmin:dist'
   ]);
   
   /**
@@ -593,29 +565,8 @@ module.exports = function (grunt) {
   grunt.registerTask('test', [
     'shell:protractor_update',
     'jshint',
-	'connect:test',
-	'protractor:e2e',
+	  'connect:test',
+	  'protractor:e2e',
     'karma:unit'
-  ]);
-  
-  /**
-   * Publish task
-   * Run `grunt publish` on the command line
-   * Then clean, copy, minify and optimize content for distribution 
-   */
-  grunt.registerTask('publish', [
-    'sass:dist',
-    'test',
-    'clean',
-    'copy',
-    'bump-only:minor',
-    'ngconstant:dist',
-    'filerev:dist',
-    'injector:dist',
-    'injector:bower',
-    'jshint',
-    'uglify',
-    'imagemin:dist',
-    'htmlmin:dist'
   ]);
 };

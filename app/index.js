@@ -151,31 +151,43 @@ module.exports = generators.Base.extend({
             });
         },
         bower: function() {
-            var bowerJson = {
-                name: this.appname,
-                license: 'MIT',
-                dependencies: {},
-                devDependencies: {}
-            };
-            
-            bowerJson.dependencies['angular'] = '^1.5.6';
-            bowerJson.dependencies['angular-animate'] = '^1.5.6';
-            bowerJson.dependencies['angular-bootstrap'] = '^1.3.3';
-            bowerJson.dependencies['angular-loading-bar'] = '^0.9.0';
-            bowerJson.dependencies['angular-route'] = '^1.5.6';
-            bowerJson.dependencies['bootstrap-css-only'] = '^3.3.6';
-            bowerJson.devDependencies['angular-mocks'] = '^1.5.6';
-            if(this.includeLodash) {
-                bowerJson.dependencies['lodash'] = '^4.13.1';
+            if(!this.options['skip-install'] || !this.config.get('bowerInstalled')) {
+                var bowerJson = {
+                    name: this.appname,
+                    license: 'MIT',
+                    dependencies: {},
+                    devDependencies: {},
+                    overrides: {}
+                };
+                
+                bowerJson.dependencies['angular'] = '^1.5.6';
+                bowerJson.dependencies['angular-animate'] = '^1.5.6';
+                bowerJson.dependencies['angular-bootstrap'] = '^1.3.3';
+                bowerJson.dependencies['angular-loading-bar'] = '^0.9.0';
+                bowerJson.dependencies['angular-route'] = '^1.5.6';
+                bowerJson.dependencies['bootstrap-css-only'] = '^3.3.6';
+                bowerJson.devDependencies['angular-mocks'] = '^1.5.6';
+                if(this.includeLodash) {
+                    bowerJson.dependencies['lodash'] = '^4.13.1';
+                    bowerJson.overrides['lodash'] = new Object;
+                    bowerJson.overrides['lodash']['main'] = [
+                        'dist/lodash.js'
+                    ];
+                }
+                if(this.includeMoment) {
+                    bowerJson.dependencies['moment'] = '^2.13.0';
+                    bowerJson.overrides['moment'] = new Object;
+                    bowerJson.overrides['moment']['main'] = [
+                        'min/moment.min.js'
+                    ];
+                }
+                if(this.includeAngularUIUtils) {
+                    bowerJson.dependencies['angular-ui-utils'] = '^3.0.0';
+                }
+                this.fs.writeJSON('bower.json', bowerJson);
+                this.copy('bowerrc', '.bowerrc');
+                this.config.set('bowerInstalled', true);
             }
-            if(this.includeMoment) {
-                bowerJson.dependencies['moment'] = '^2.13.0';
-            }
-            if(this.includeAngularUIUtils) {
-                bowerJson.dependencies['angular-ui-utils'] = '^3.0.0';
-            }
-            this.fs.writeJSON('bower.json', bowerJson);
-            this.copy('bowerrc', '.bowerrc');
         },
         appStaticFiles: function() {
             this.copy('_favicon.ico', 'app/favicon.ico');
@@ -263,8 +275,6 @@ module.exports = generators.Base.extend({
     conflicts: function() {
     },
     install: function() {
-        //this.bowerInstall();
-        //this.npmInstall();
         this.installDependencies({
             skipInstall: this.options['skip-install']
         });
